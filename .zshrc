@@ -31,6 +31,15 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 # Keybindings
 bindkey "^H" backward-kill-word
 
+# Functions
+cleanup() {
+  yay -Scc && yay -Ycc;
+  sudo pacman -Qttdq | sudo pacman -Rnsu -;
+  flatpak uninstall --unused;
+  sudo journalctl --rotate && sudo journalctl --vacuum-time=1d;
+  sudo rm -rf /var/lib/systemd/coredump/*;
+}
+
 # Configure zsh syntax highlighters
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 
