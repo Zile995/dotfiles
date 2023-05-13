@@ -46,6 +46,9 @@ setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
 setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
 
+# Zsh options
+setopt NO_AUTO_REMOVE_SLASH
+
 # Configure zsh syntax highlighters
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 
