@@ -26,8 +26,8 @@ bindkey "^H" backward-kill-word
 
 # Functions
 cleanup() {
-  yes | { yay -Scc && yay -Ycc }
-  { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 2>/dev/null
+  yes | yay -Ycc
+  { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 2>/dev/null; yes | yay -Scc
   flatpak uninstall --unused --assumeyes
   sudo journalctl --rotate && sudo journalctl --vacuum-time=1d
   { sudo rm -rf /var/lib/systemd/coredump/* } > /dev/null 2>&1
