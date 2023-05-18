@@ -6,23 +6,11 @@ autoload -U select-word-style && select-word-style bash
 # Rehash
 TRAPUSR1() { rehash }
 
-# Zstyle fzf-tab
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:*' continuous-trigger 'space'
-zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
-#zstyle ':fzf-tab:*' accept-line enter
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always --icons $realpath'
-
-# Zstyle completion
-zstyle ':completion:*' special-dirs true
-zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:complete:*:options' sort false
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-
 # Keybindings
 bindkey "^H" backward-kill-word
+
+# Aliases
+alias exa='exa --color=auto --icons'
 
 # Functions
 cleanup() {
@@ -54,6 +42,21 @@ setopt NO_AUTO_REMOVE_SLASH
 
 # Configure zsh syntax highlighters
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
+
+# Zstyle fzf-tab
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:*' continuous-trigger 'space'
+zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
+#zstyle ':fzf-tab:*' accept-line enter
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always --icons $realpath'
+
+# Zstyle completion
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:complete:*:options' sort false
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Load antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
