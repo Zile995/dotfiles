@@ -48,6 +48,7 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
 
 # Zsh options
+setopt ALWAYS_TO_END
 setopt COMPLETE_IN_WORD
 setopt NO_AUTO_REMOVE_SLASH
 
