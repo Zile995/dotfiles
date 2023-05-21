@@ -37,8 +37,11 @@ setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming 
 
 # Zsh options
 setopt AUTO_CD
+setopt C_BASES
+setopt MULTIOS
 setopt CORRECT
 setopt CORRECTALL
+setopt AUTO_PUSHD
 setopt ALWAYS_TO_END
 setopt COMPLETE_IN_WORD
 setopt NO_AUTO_REMOVE_SLASH
@@ -50,7 +53,6 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:*' continuous-trigger 'space'
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
-#zstyle ':fzf-tab:*' accept-line enter
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always --icons $realpath'
 
 # Zstyle completion
