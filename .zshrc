@@ -48,6 +48,8 @@ setopt INTERACTIVE_COMMENTS
 setopt NO_AUTO_REMOVE_SLASH
 
 # Configure zsh syntax highlighters
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 
 # Zstyle fzf-tab
