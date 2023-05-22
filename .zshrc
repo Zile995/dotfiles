@@ -44,6 +44,7 @@ setopt CORRECTALL
 setopt AUTO_PUSHD
 setopt ALWAYS_TO_END
 setopt COMPLETE_IN_WORD
+setopt INTERACTIVE_COMMENTS
 setopt NO_AUTO_REMOVE_SLASH
 
 # Configure zsh syntax highlighters
