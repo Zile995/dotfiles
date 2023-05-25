@@ -12,6 +12,10 @@ bindkey "^H" backward-kill-word
 # Aliases
 alias exa='exa --color=auto --icons'
 
+# Exports
+#export EDITOR='nvim'
+export EDITOR='nano'
+
 # Functions
 cleanup() {
   yes | yay -Ycc
