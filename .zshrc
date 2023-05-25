@@ -11,6 +11,7 @@ bindkey "^H" backward-kill-word
 
 # Aliases
 alias exa='exa --color=auto --icons'
+alias ll='exa --long --all --group-directories-first --git'
 
 # Exports
 #export EDITOR='nvim'
