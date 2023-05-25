@@ -56,7 +56,9 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:*' continuous-trigger 'space'
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
+zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color $word'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always --icons $realpath'
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
 # Zstyle completion
 zstyle ':completion:*' special-dirs true
