@@ -3,19 +3,19 @@
 # powerlevel10k prompt
 romkatv/powerlevel10k
 
-# window title
-olets/zsh-window-title
-
 # oh-my-zsh plugins / libs
 ohmyzsh/ohmyzsh path:lib/grep.zsh
 ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
 ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
 
 # fzf tab completion and history search
-Aloxaf/fzf-tab kind:defer
-joshskidmore/zsh-fzf-history-search kind:defer
+Aloxaf/fzf-tab
+joshskidmore/zsh-fzf-history-search 
+
+# window title
+olets/zsh-window-title
 
 # zsh-users plugins
-zsh-users/zsh-autosuggestions kind:defer
-zsh-users/zsh-history-substring-search kind:defer
-zsh-users/zsh-syntax-highlighting kind:defer
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-syntax-highlighting
