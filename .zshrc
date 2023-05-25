@@ -3,6 +3,10 @@ autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 autoload -U select-word-style && select-word-style bash
 
+# Load antidote
+source '/usr/share/zsh-antidote/antidote.zsh'
+antidote load
+
 # Rehash
 TRAPUSR1() { rehash }
 
@@ -72,7 +76,3 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:complete:*:options' sort false
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-
-# Load antidote
-source '/usr/share/zsh-antidote/antidote.zsh'
-antidote load
