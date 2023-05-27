@@ -7,6 +7,9 @@ autoload -U select-word-style && select-word-style bash
 source '/usr/share/zsh-antidote/antidote.zsh'
 antidote load
 
+# Source plugins
+source "${ZDOTDIR:-$HOME}/dirnav.zsh"
+
 # Rehash
 TRAPUSR1() { rehash }
 
@@ -30,7 +33,7 @@ cleanup() {
   { sudo rm -rf /var/lib/systemd/coredump/* } > /dev/null 2>&1
 }
 
-# Zsh History
+# Zsh history
 HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
@@ -47,15 +50,14 @@ setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming 
 # Zsh options
 setopt AUTO_CD
 setopt C_BASES
-setopt MULTIOS
 setopt CORRECT
-setopt AUTO_PUSHD
+setopt MULTIOS
 setopt ALWAYS_TO_END
 setopt COMPLETE_IN_WORD
 setopt INTERACTIVE_COMMENTS
 setopt NO_AUTO_REMOVE_SLASH
 
-# Configure zsh syntax highlighters
+# Zsh syntax highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
