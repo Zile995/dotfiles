@@ -49,7 +49,6 @@ setopt AUTO_CD
 setopt C_BASES
 setopt MULTIOS
 setopt CORRECT
-setopt CORRECTALL
 setopt AUTO_PUSHD
 setopt ALWAYS_TO_END
 setopt COMPLETE_IN_WORD
