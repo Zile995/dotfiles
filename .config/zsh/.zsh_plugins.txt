@@ -12,7 +12,6 @@ ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
 
 # fzf tab completion and history search
 Aloxaf/fzf-tab
-joshskidmore/zsh-fzf-history-search 
 
 # zsh-users plugins
 zsh-users/zsh-autosuggestions
