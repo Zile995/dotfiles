@@ -74,7 +74,7 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always --icons $real
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
 # Zstyle completion
-zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' special-dirs false
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:complete:*:options' sort false
