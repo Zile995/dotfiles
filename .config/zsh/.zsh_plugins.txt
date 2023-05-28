@@ -8,7 +8,6 @@ olets/zsh-window-title
 
 # oh-my-zsh plugins / libs
 ohmyzsh/ohmyzsh path:lib/grep.zsh
-ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
 ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
 
 # fzf tab completion and history search

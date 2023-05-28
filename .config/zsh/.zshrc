@@ -3,18 +3,16 @@ autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 autoload -U select-word-style && select-word-style bash
 
+# Source plugins
+source "${ZDOTDIR:-$HOME}/plugins/dirnav.zsh"
+source "${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh"
+
 # Load antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
 antidote load
 
-# Source plugins
-source "${ZDOTDIR:-$HOME}/dirnav.zsh"
-
 # Rehash
 TRAPUSR1() { rehash }
-
-# Keybindings
-bindkey "^H" backward-kill-word
 
 # Aliases
 alias exa='exa --color=auto --icons'
