@@ -23,6 +23,8 @@ alias ll='exa --long --all --group-directories-first --git'
 # Exports
 #export EDITOR='nvim'
 export EDITOR='nano'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 
 # Functions
 cleanup() {
@@ -32,6 +34,9 @@ cleanup() {
   sudo journalctl --rotate && sudo journalctl --vacuum-time=1d
   { sudo rm -rf /var/lib/systemd/coredump/* } > /dev/null 2>&1
 }
+
+_fzf_compgen_dir() { fd --type d --hidden --exclude .git . "$1" }
+_fzf_compgen_path() { fd --type f --hidden --exclude .git . "$1" }
 
 # Zsh history
 HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
