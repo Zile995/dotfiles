@@ -53,6 +53,7 @@ setopt C_BASES
 setopt CORRECT
 setopt MULTIOS
 setopt GLOB_DOTS
+setopt NO_BG_NICE
 setopt ALWAYS_TO_END
 setopt NO_LIST_TYPES
 setopt TYPESET_SILENT
