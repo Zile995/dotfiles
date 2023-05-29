@@ -22,5 +22,4 @@ Aloxaf/fzf-tab
 
 # Zsh-users plugins
 zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting
