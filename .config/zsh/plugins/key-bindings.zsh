@@ -12,6 +12,7 @@ key[Right]="${terminfo[kcuf1]}"
 key[PageUp]="${terminfo[kpp]}"
 key[PageDown]="${terminfo[knp]}"
 key[Shift-Tab]="${terminfo[kcbt]}"
+key[Alt-Delete]="${terminfo[kDC3]}"
 key[Control-Left]="${terminfo[kLFT5]}"
 key[Control-Right]="${terminfo[kRIT5]}"
 key[Control-Delete]="${terminfo[kDC5]}"
@@ -30,6 +31,7 @@ key[Control-Backspace]="${terminfo[cub1]}"
 [[ -n "${key[PageUp]}"            ]] && bindkey -- "${key[PageUp]}"            beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}"          ]] && bindkey -- "${key[PageDown]}"          end-of-buffer-or-history
 [[ -n "${key[Shift-Tab]}"         ]] && bindkey -- "${key[Shift-Tab]}"         reverse-menu-complete
+[[ -n "${key[Alt-Delete]}"        ]] && bindkey -- "${key[Alt-Delete]}"        kill-word
 [[ -n "${key[Control-Left]}"      ]] && bindkey -- "${key[Control-Left]}"      backward-word
 [[ -n "${key[Control-Right]}"     ]] && bindkey -- "${key[Control-Right]}"     forward-word
 [[ -n "${key[Control-Delete]}"    ]] && bindkey -- "${key[Control-Delete]}"    kill-word
