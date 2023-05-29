@@ -47,7 +47,6 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 
 # Zstyle fzf-tab
 zstyle ':fzf-tab:*' print-query alt-p
-zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:*' accept-line alt-enter
 zstyle ':fzf-tab:*' fzf-bindings 'enter:accept'
 zstyle ':fzf-tab:*' continuous-trigger 'alt-right'
