@@ -11,10 +11,6 @@ ${ZDOTDIR:-$HOME}/plugins/dirnav.zsh
 ${ZDOTDIR:-$HOME}/plugins/history.zsh
 ${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh
 
-# Oh-my-zsh plugins / libs
-ohmyzsh/ohmyzsh path:lib/grep.zsh
-ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
-
 # Fzf completion
 /usr/share/fzf/completion.zsh
 /usr/share/fzf/key-bindings.zsh
