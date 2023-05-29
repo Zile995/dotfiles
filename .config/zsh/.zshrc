@@ -11,7 +11,6 @@ antidote load
 TRAPUSR1() { rehash }
 
 # Aliases
-alias exa='exa --color=auto --icons'
 alias ll='exa --long --all --group-directories-first --git'
 
 # Exports
