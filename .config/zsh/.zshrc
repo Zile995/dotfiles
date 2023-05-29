@@ -3,13 +3,6 @@ autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 autoload -U select-word-style && select-word-style bash
 
-# Source plugins
-source "${ZDOTDIR:-$HOME}/plugins/dirnav.zsh"
-source "${ZDOTDIR:-$HOME}/plugins/history.zsh"
-source "${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh"
-source "/usr/share/fzf/completion.zsh"
-source "/usr/share/fzf/key-bindings.zsh"
-
 # Load antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
 antidote load

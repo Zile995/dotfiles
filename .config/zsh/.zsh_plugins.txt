@@ -1,19 +1,26 @@
 # .zsh_plugins.txt
 
-# powerlevel10k prompt
+# Powerlevel10k prompt
 romkatv/powerlevel10k
 
-# window title
+# Window title
 olets/zsh-window-title
 
-# oh-my-zsh plugins / libs
+# Local plugins
+${ZDOTDIR:-$HOME}/plugins/dirnav.zsh
+${ZDOTDIR:-$HOME}/plugins/history.zsh
+${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh
+
+# Oh-my-zsh plugins / libs
 ohmyzsh/ohmyzsh path:lib/grep.zsh
 ohmyzsh/ohmyzsh path:lib/theme-and-appearance.zsh
 
-# fzf tab completion and history search
+# Fzf completion
+/usr/share/fzf/completion.zsh
+/usr/share/fzf/key-bindings.zsh
 Aloxaf/fzf-tab
 
-# zsh-users plugins
+# Zsh-users plugins
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting
