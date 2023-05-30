@@ -13,3 +13,9 @@ zstyle ':fzf-tab:complete:systemctl-(status|(re|)start|(dis|en)able):*' fzf-prev
 zstyle ':fzf-tab:complete:(kill|ps):*' fzf-preview \
        '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:(kill|ps):argument-rest' fzf-flags --preview-window=down:3:wrap
+
+# Git diff, log, describe and help
+zstyle ':fzf-tab:complete:git-diff:*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
+zstyle 'fzf-tab:complete:git-describe:argument-rest' fzf-preview 'git describe $word'
+zstyle ':fzf-tab:complete:git-help:*' fzf-preview 'git help $word | bat -plman --color=always'
