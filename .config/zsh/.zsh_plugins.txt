@@ -20,6 +20,5 @@ Aloxaf/fzf-tab
 ${ZDOTDIR:-$HOME}/plugins/fzf-tab-config.zsh
 
 # Zsh-users plugins
-zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-syntax-highlighting
