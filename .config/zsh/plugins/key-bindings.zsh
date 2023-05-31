@@ -39,12 +39,15 @@ key[Control-Backspace]="${terminfo[cub1]}"
 
 # Finally, make sure the terminal is in application mode, when zle is active.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-  autoload -Uz add-zle-hook-widget up-line-or-beginning-search down-line-or-beginning-search
+  autoload -Uz add-zle-hook-widget
   function zle_application_mode_start { echoti smkx }
   function zle_application_mode_stop { echoti rmkx }
   add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
   add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
-	
+
+# Autoload widgets.
+autoload -U select-word-style && select-word-style bash	
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search

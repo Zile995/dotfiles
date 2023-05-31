@@ -1,6 +1,3 @@
-# Set autoloading functions
-autoload -U select-word-style && select-word-style bash
-
 # Load antidote
 source '/usr/share/zsh-antidote/antidote.zsh'
 antidote load
