@@ -2,6 +2,7 @@
 autoload -Uz compinit && compinit
 
 # Completion
+zstyle ':completion:*' use-cache on
 zstyle ':completion:*' special-dirs false
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':completion:*:descriptions' format '[%d]'
