@@ -13,6 +13,7 @@ ${ZDOTDIR:-$HOME}/plugins/dirnav.zsh
 ${ZDOTDIR:-$HOME}/plugins/history.zsh
 ${ZDOTDIR:-$HOME}/plugins/shellopts.zsh
 ${ZDOTDIR:-$HOME}/plugins/completion.zsh
+${ZDOTDIR:-$HOME}/plugins/copybuffer.zsh
 ${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh
 
 # Fzf completion
