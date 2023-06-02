@@ -11,6 +11,7 @@ alias ll='exa --long --all --group-directories-first --git'
 # Exports
 #export EDITOR='nvim'
 export EDITOR='nano'
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # Functions
 cleanup() {
