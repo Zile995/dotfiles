@@ -1,3 +1,6 @@
+# Set tmux height
+export FZF_TMUX_HEIGHT='50%'
+
 # Set default commands. Use fd instead of the default find.
 export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
