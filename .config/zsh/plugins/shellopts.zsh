@@ -1,5 +1,6 @@
 # Zsh options
 setopt AUTO_CD
+setopt NO_BEEP
 setopt C_BASES
 setopt CORRECT
 setopt MULTIOS
