@@ -4,7 +4,11 @@ zstyle ':fzf-tab:*' accept-line alt-enter
 zstyle ':fzf-tab:*' fzf-bindings 'enter:accept'
 zstyle ':fzf-tab:*' continuous-trigger 'alt-right'
 
+# fzf-tab single group
+zstyle ':fzf-tab:*' single-group color
+
 # fzf-tab preview configuration
+# tld, cd, exa and systemctl
 zstyle ':fzf-tab:complete:tldr:argument-1' fzf-preview 'tldr --color $word'
 zstyle ':fzf-tab:complete:(cd|exa):*' fzf-preview 'exa -1 --color=always --icons $realpath'
 zstyle ':fzf-tab:complete:systemctl-(status|(re|)start|(dis|en)able):*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
