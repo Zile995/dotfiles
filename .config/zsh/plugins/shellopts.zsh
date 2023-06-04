@@ -4,11 +4,13 @@ setopt NO_BEEP
 setopt C_BASES
 setopt CORRECT
 setopt MULTIOS
+setopt AUTO_MENU
 setopt GLOB_DOTS
 setopt NO_BG_NICE
 setopt ALWAYS_TO_END
 setopt NO_LIST_TYPES
 setopt TYPESET_SILENT
+setopt NO_FLOW_CONTROL
 setopt AUTO_PARAM_SLASH
 setopt COMPLETE_IN_WORD
 setopt INTERACTIVE_COMMENTS
