@@ -6,6 +6,11 @@ romkatv/powerlevel10k
 # Window title
 olets/zsh-window-title
 
+# Fzf completion
+Aloxaf/fzf-tab
+/usr/share/fzf/completion.zsh
+/usr/share/fzf/key-bindings.zsh
+
 # Local plugins
 ${ZDOTDIR:-$HOME}/plugins/fzf.zsh
 ${ZDOTDIR:-$HOME}/plugins/colors.zsh
@@ -15,11 +20,6 @@ ${ZDOTDIR:-$HOME}/plugins/shellopts.zsh
 ${ZDOTDIR:-$HOME}/plugins/completion.zsh
 ${ZDOTDIR:-$HOME}/plugins/copybuffer.zsh
 ${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh
-
-# Fzf completion
-Aloxaf/fzf-tab
-/usr/share/fzf/completion.zsh
-/usr/share/fzf/key-bindings.zsh
 ${ZDOTDIR:-$HOME}/plugins/fzf-tab-config.zsh
 
 # Zsh-users plugins
