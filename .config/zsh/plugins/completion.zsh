@@ -1,5 +1,6 @@
 # Load zsh completion 
 autoload -Uz compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
 
 # Completion
 zstyle ':completion:*' use-cache on
