@@ -1,6 +1,15 @@
 # Load antidote
-source '/usr/share/zsh-antidote/antidote.zsh'
-antidote load
+fpath+=(/usr/share/zsh-antidote/functions)
+autoload -Uz antidote
+
+# Set the name of plugins file
+zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
+
+# Generate and source static plugins file
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins} ]]; then
+  (antidote bundle <${zsh_plugins} >${zsh_plugins}.zsh)
+fi
+source ${zsh_plugins}.zsh
 
 # Load zstyles
 [[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
