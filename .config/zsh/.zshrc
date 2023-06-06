@@ -2,6 +2,9 @@
 source '/usr/share/zsh-antidote/antidote.zsh'
 antidote load
 
+# Load zstyles
+[[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
+
 # Rehash
 TRAPUSR1() { rehash }
 
