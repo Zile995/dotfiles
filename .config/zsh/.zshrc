@@ -5,6 +5,9 @@ autoload -Uz antidote
 # Set the name of plugins file
 zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
 
+# Create the .zsh_plugins if it doesn't exist
+[[ -f ${zsh_plugins:r} ]] || touch ${zsh_plugins:r}
+
 # Generate and source static plugins file
 if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins} ]]; then
   (antidote bundle <${zsh_plugins} >${zsh_plugins}.zsh)
