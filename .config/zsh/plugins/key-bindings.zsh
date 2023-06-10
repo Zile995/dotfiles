@@ -18,7 +18,7 @@ key[Control-Right]="${terminfo[kRIT5]}"
 key[Control-Delete]="${terminfo[kDC5]}"
 key[Control-Backspace]="${terminfo[cub1]}"
 
-# setup key accordingly
+# Setup terminfo keys accordingly
 [[ -n "${key[Home]}"              ]] && bindkey -- "${key[Home]}"              beginning-of-line
 [[ -n "${key[End]}"               ]] && bindkey -- "${key[End]}"               end-of-line
 [[ -n "${key[Insert]}"            ]] && bindkey -- "${key[Insert]}"            overwrite-mode
@@ -37,6 +37,8 @@ key[Control-Backspace]="${terminfo[cub1]}"
 [[ -n "${key[Control-Delete]}"    ]] && bindkey -- "${key[Control-Delete]}"    kill-word
 [[ -n "${key[Control-Backspace]}" ]] && bindkey -- "${key[Control-Backspace]}" backward-kill-word
 
+bindkey '^L' clear-screen-and-scrollback
+
 # Finally, make sure the terminal is in application mode, when zle is active.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
   autoload -Uz add-zle-hook-widget
@@ -46,8 +48,17 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
   add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
+function clear-screen-and-scrollback() {
+    echoti civis >"$TTY"
+    printf '%b' '\e[H\e[2J' >"$TTY"
+    zle .reset-prompt && zle -R
+    printf '%b' '\e[3J' >"$TTY"
+    echoti cnorm >"$TTY"
+}
+
 # Autoload widgets.
 autoload -U select-word-style && select-word-style bash	
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N clear-screen-and-scrollback
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
