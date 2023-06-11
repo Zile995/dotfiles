@@ -1,9 +1,6 @@
 # Powerlevel10k prompt
 romkatv/powerlevel10k
 
-# Window title
-olets/zsh-window-title
-
 # Fzf completion
 Aloxaf/fzf-tab
 /usr/share/fzf/completion.zsh
@@ -18,6 +15,7 @@ ${ZDOTDIR:-$HOME}/plugins/shellopts.zsh
 ${ZDOTDIR:-$HOME}/plugins/completion.zsh
 ${ZDOTDIR:-$HOME}/plugins/copybuffer.zsh
 ${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh
+${ZDOTDIR:-$HOME}/plugins/window-title.zsh
 
 # Zsh-users plugins
 zsh-users/zsh-autosuggestions
