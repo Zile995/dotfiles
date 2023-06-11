@@ -34,7 +34,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # Functions
 cleanup() {
   yes | yay -Ycc
-  { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 2>/dev/null; yes | yay -Scc
+  { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 1> /dev/null; yes | yay -Scc
   flatpak uninstall --unused --assumeyes
   sudo journalctl --rotate && sudo journalctl --vacuum-time=1d
   { sudo rm -rf /var/lib/systemd/coredump/* } > /dev/null 2>&1
