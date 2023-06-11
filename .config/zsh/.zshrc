@@ -24,7 +24,7 @@ TRAPUSR1() { rehash }
 alias dd='dd status=progress'
 alias lsblk='lsblk -o +fstype,label,uuid,model'
 alias ll='exa --long --all --group-directories-first --git'
-alias clearcaches='sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches'
+alias clearcaches='sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches 1> /dev/null'
 
 # Exports
 #export EDITOR='nvim'
