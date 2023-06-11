@@ -22,6 +22,7 @@ TRAPUSR1() { rehash }
 
 # Aliases
 alias ll='exa --long --all --group-directories-first --git'
+alias clearcaches="sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches"
 
 # Exports
 #export EDITOR='nvim'
