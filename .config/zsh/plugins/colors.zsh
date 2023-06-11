@@ -6,7 +6,9 @@ source <(dircolors -b)
 
 # Set ls, grep and exa colors
 alias ls='ls --color=tty'
-alias exa='exa --color=auto --icons'
+if (( $+commands[exa] )) ; then
+  alias exa='exa --color=auto --icons'
+fi
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
 if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
