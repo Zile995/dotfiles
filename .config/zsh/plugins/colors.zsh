@@ -6,12 +6,11 @@ source <(dircolors -b)
 
 # Set ls, grep and exa colors
 alias ls='ls --color=tty'
-if (( $+commands[exa] )) ; then
-  alias exa='exa --color=auto --icons'
-fi
+if (( $+commands[bat] )); then alias cat='bat -pp'; fi
+if (( $+commands[exa] )); then alias exa='exa --color=auto --icons'; fi
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
-if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
+if [[ "$TERM" != dumb ]] && (( $+commands[grc] )); then
   # Supported commands
   cmds=(
     as ant blkid cc configure curl cvs df diff dig dnf docker docker-compose \
@@ -23,8 +22,8 @@ if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
   );
 
   # Set alias for available commands.
-  for cmd in $cmds ; do
-    if (( $+commands[$cmd] )) ; then
+  for cmd in $cmds; do
+    if (( $+commands[$cmd] )); then
       unalias $cmd &> /dev/null
       $cmd() {
         grc --colour=auto ${commands[$0]} "$@"
