@@ -1,3 +1,6 @@
+# Load zstyles
+[[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
+
 # Load antidote
 fpath+=(/usr/share/zsh-antidote/functions)
 autoload -Uz antidote
@@ -13,9 +16,6 @@ if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins} ]]; then
   (antidote bundle <${zsh_plugins} >${zsh_plugins}.zsh)
 fi
 source ${zsh_plugins}.zsh
-
-# Load zstyles
-[[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
 
 # Rehash
 TRAPUSR1() { rehash }
