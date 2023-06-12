@@ -18,6 +18,8 @@ fzf-xdg-dir() {
       fzf \
       --reverse \
       --height 60% \
+      --scheme=path \
+      --query=${LBUFFER} \
       --preview 'exa -1 --icons {}' \
     )
 
@@ -30,6 +32,6 @@ fzf-xdg-dir() {
 }
 
 zle -N fzf-xdg-dir
-bindkey -M emacs '^[d' fzf-xdg-dir
-bindkey -M vicmd '^[d' fzf-xdg-dir
-bindkey -M viins '^[d' fzf-xdg-dir
+bindkey -M emacs '^[i' fzf-xdg-dir
+bindkey -M vicmd '^[i' fzf-xdg-dir
+bindkey -M viins '^[i' fzf-xdg-dir
