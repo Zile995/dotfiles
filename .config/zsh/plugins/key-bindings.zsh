@@ -37,7 +37,7 @@ key[Control-Backspace]="${terminfo[cub1]}"
 [[ -n "${key[Control-Delete]}"    ]] && bindkey -- "${key[Control-Delete]}"    kill-word
 [[ -n "${key[Control-Backspace]}" ]] && bindkey -- "${key[Control-Backspace]}" backward-kill-word
 
-bindkey '^D' exit_zsh
+bindkey '^D' exit-zsh
 bindkey '^L' clear-screen-and-scrollback
 
 # Finally, make sure the terminal is in application mode, when zle is active.
@@ -49,9 +49,9 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
   add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
-exit_zsh() { exit }
+exit-zsh() { exit }
 
-function clear-screen-and-scrollback() {
+clear-screen-and-scrollback() {
     echoti civis >"$TTY"
     printf '%b' '\e[H\e[2J' >"$TTY"
     zle .reset-prompt && zle -R
@@ -64,7 +64,7 @@ autoload -U select-word-style && select-word-style bash
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 
 # Define new widgets
-zle -N exit_zsh
+zle -N exit-zsh
 zle -N clear-screen-and-scrollback
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
