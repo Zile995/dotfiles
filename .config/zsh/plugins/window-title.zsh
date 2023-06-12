@@ -1,15 +1,11 @@
 autoload -Uz add-zsh-hook
 
-title-precmd() {
-  'builtin' 'emulate' -LR zsh
-  local title=$(print -P "%2~")
-  'builtin' 'echo' -ne "\033]0;$title\007" >$TTY
+title-precmd () {
+  print -Pn -- '\e]2;%2~\a' >$TTY
 }
 
-title-preexec() {
-  'builtin' 'emulate' -LR zsh
-  local title=$(print -P "%2~ - ${(q)1}\a")
-  'builtin' 'echo' -ne "\033]0;$title\007" >$TTY
+title-preexec () {
+  print -Pn -- '\e]2;%2~ - ' && print -n -- "${(q)1}\a" >$TTY
 }
 
 if [[ "$TERM" == (Eterm*|alacritty*|aterm*|foot*|gnome*|konsole*|kterm*|putty*|rxvt*|screen*|wezterm*|tmux*|xterm*) ]]; then
