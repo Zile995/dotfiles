@@ -10,3 +10,26 @@ _fzf_compgen_dir() { fd --type d --hidden --exclude .git . "$1" }
 
 # Use fd to generate the list for directory completion.
 _fzf_compgen_path() { fd --type f --hidden --exclude .git . "$1" }
+
+fzf-xdg-dir() { 
+  if (( $+commands[fd] )) && (( $+commands[fzf] )) && (( $+commands[exa] )); then
+    local selected_dir=$( \
+      fd -t d -H -E .git | \
+      fzf \
+      --reverse \
+      --height 60% \
+      --preview 'exa -1 --icons {}' \
+    )
+
+    if [ -n "$selected_dir" ]; then
+      (xdg-open "$selected_dir" & disown &>/dev/null)
+    fi
+
+    zle .reset-prompt && zle -R
+  fi
+}
+
+zle -N fzf-xdg-dir
+bindkey -M emacs '^[d' fzf-xdg-dir
+bindkey -M vicmd '^[d' fzf-xdg-dir
+bindkey -M viins '^[d' fzf-xdg-dir
