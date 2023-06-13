@@ -37,8 +37,9 @@ key[Control-Backspace]="${terminfo[cub1]}"
 [[ -n "${key[Control-Delete]}"    ]] && bindkey -- "${key[Control-Delete]}"    kill-word
 [[ -n "${key[Control-Backspace]}" ]] && bindkey -- "${key[Control-Backspace]}" backward-kill-word
 
-bindkey '^D' exit-zsh
-bindkey '^L' clear-screen-and-scrollback
+bindkey '^D'  exit-zsh
+bindkey '^[o' xdg-open-dir
+bindkey '^L'  clear-screen-and-scrollback
 
 # Finally, make sure the terminal is in application mode, when zle is active.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
@@ -50,6 +51,8 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 fi
 
 exit-zsh() { exit }
+
+xdg-open-dir() { xdg-open . }
 
 clear-screen-and-scrollback() {
     echoti civis >"$TTY"
@@ -65,6 +68,7 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 
 # Define new widgets
 zle -N exit-zsh
+zle -N xdg-open-dir
 zle -N clear-screen-and-scrollback
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
