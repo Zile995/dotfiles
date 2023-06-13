@@ -2,10 +2,18 @@ if (( $+commands[fzf] )); then
   # Set tmux height
   export FZF_TMUX_HEIGHT='50%'
 
+  export FZF_DEFAULT_OPTS="
+    --height=50%
+    --layout=reverse
+    --prompt='∼ ' --pointer='▶' --marker='✓'
+    --color info:108,prompt:65,spinner:69,pointer:65,marker:151
+  "
+
   if (( $+commands[fd] )); then
     # Set default commands. Use fd instead of the default find.
     export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude={.git,.hg,.svn}'
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude={.git,.hg,.svn}'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
     # Use fd for listing path candidates.
     _fzf_compgen_dir() { fd --type d --hidden --exclude={.git,.hg,.svn} . "$1" }
