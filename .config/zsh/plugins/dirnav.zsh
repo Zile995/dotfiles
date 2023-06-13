@@ -1,4 +1,4 @@
-my-redraw-prompt() {
+redraw-prompt() {
   {
     builtin echoti civis
     builtin local f
@@ -11,37 +11,36 @@ my-redraw-prompt() {
   }
 }
 
-my-cd-rotate() {
+cd-rotate() {
   () {
     builtin emulate -L zsh
     while (( $#dirstack )) && ! builtin pushd -q $1 &>/dev/null; do
       builtin popd -q $1
     done
     (( $#dirstack ))
-  } "$@" && my-redraw-prompt
+  } "$@" && redraw-prompt
 }
 
+cd-up()      { builtin cd -q .. && redraw-prompt; }
+cd-back()    { cd-rotate +1; }
+cd-forward() { cd-rotate -0; }
 
-function my-cd-up()      { builtin cd -q .. && my-redraw-prompt; }
-function my-cd-back()    { my-cd-rotate +1; }
-function my-cd-forward() { my-cd-rotate -0; }
-
-builtin zle -N my-cd-up
-builtin zle -N my-cd-back
-builtin zle -N my-cd-forward
+builtin zle -N cd-up
+builtin zle -N cd-back
+builtin zle -N cd-forward
 
 () {
   builtin local keymap
-  for keymap in emacs viins vicmd; do
-    builtin bindkey '^[^[[A'  my-cd-up
-    builtin bindkey '^[[1;3A' my-cd-up
-    builtin bindkey '^[[1;9A' my-cd-up
-    builtin bindkey '^[^[[D'  my-cd-back
-    builtin bindkey '^[[1;3D' my-cd-back
-    builtin bindkey '^[[1;9D' my-cd-back
-    builtin bindkey '^[^[[C'  my-cd-forward
-    builtin bindkey '^[[1;3C' my-cd-forward
-    builtin bindkey '^[[1;9C' my-cd-forward
+  for keymap in 'emacs' 'viins' 'vicmd'; do
+    builtin bindkey -M "$keymap" '^[^[[A'  cd-up
+    builtin bindkey -M "$keymap" '^[[1;3A' cd-up
+    builtin bindkey -M "$keymap" '^[[1;9A' cd-up
+    builtin bindkey -M "$keymap" '^[^[[D'  cd-back
+    builtin bindkey -M "$keymap" '^[[1;3D' cd-back
+    builtin bindkey -M "$keymap" '^[[1;9D' cd-back
+    builtin bindkey -M "$keymap" '^[^[[C'  cd-forward
+    builtin bindkey -M "$keymap" '^[[1;3C' cd-forward
+    builtin bindkey -M "$keymap" '^[[1;9C' cd-forward
   done
 }
 
