@@ -7,16 +7,16 @@ Aloxaf/fzf-tab
 /usr/share/fzf/key-bindings.zsh
 
 # Local plugins
-${ZDOTDIR:-$HOME}/plugins/fzf.zsh
-${ZDOTDIR:-$HOME}/plugins/colors.zsh
-${ZDOTDIR:-$HOME}/plugins/dirnav.zsh
-${ZDOTDIR:-$HOME}/plugins/aliases.zsh
-${ZDOTDIR:-$HOME}/plugins/history.zsh
-${ZDOTDIR:-$HOME}/plugins/shellopts.zsh
-${ZDOTDIR:-$HOME}/plugins/completion.zsh
-${ZDOTDIR:-$HOME}/plugins/copybuffer.zsh
-${ZDOTDIR:-$HOME}/plugins/key-bindings.zsh
-${ZDOTDIR:-$HOME}/plugins/window-title.zsh
+$ZDOTDIR/plugins/fzf.zsh
+$ZDOTDIR/plugins/colors.zsh
+$ZDOTDIR/plugins/dirnav.zsh
+$ZDOTDIR/plugins/aliases.zsh
+$ZDOTDIR/plugins/history.zsh
+$ZDOTDIR/plugins/shellopts.zsh
+$ZDOTDIR/plugins/completion.zsh
+$ZDOTDIR/plugins/copybuffer.zsh
+$ZDOTDIR/plugins/key-bindings.zsh
+$ZDOTDIR/plugins/window-title.zsh
 
 # Zsh-users plugins
 zsh-users/zsh-autosuggestions
