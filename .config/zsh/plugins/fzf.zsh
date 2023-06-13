@@ -1,24 +1,28 @@
-# Set tmux height
-export FZF_TMUX_HEIGHT='50%'
+if (( $+commands[fzf] )); then
+  # Set tmux height
+  export FZF_TMUX_HEIGHT='50%'
 
-# Set default commands. Use fd instead of the default find.
-export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  if (( $+commands[fd] )); then
+    # Set default commands. Use fd instead of the default find.
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude={.git,.hg,.svn}'
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude={.git,.hg,.svn}'
 
-# Use fd for listing path candidates.
-_fzf_compgen_dir() { fd --type d --hidden --exclude .git . "$1" }
+    # Use fd for listing path candidates.
+    _fzf_compgen_dir() { fd --type d --hidden --exclude={.git,.hg,.svn} . "$1" }
 
-# Use fd to generate the list for directory completion.
-_fzf_compgen_path() { fd --type f --hidden --exclude .git . "$1" }
+    # Use fd to generate the list for directory completion.
+    _fzf_compgen_path() { fd --type f --hidden --exclude={.git,.hg,.svn} . "$1" }
+  fi
+fi
 
+# Open selected dir in file manager. 
 fzf-xdg-dir() { 
-  if (( $+commands[fd] )) && (( $+commands[fzf] )) && (( $+commands[exa] )); then
+  if (( $+commands[fd] && $+commands[fzf] && $+commands[exa] )); then
     local selected_dir=$( \
-      fd -t d -H -E .git | \
+      $(echo $FZF_ALT_C_COMMAND) | \
       fzf \
       --reverse \
       --height 60% \
-      --scheme=path \
       --query=${LBUFFER} \
       --preview 'exa -1 --icons {}' \
     )
@@ -32,6 +36,10 @@ fzf-xdg-dir() {
 }
 
 zle -N fzf-xdg-dir
-bindkey -M emacs '^[i' fzf-xdg-dir
-bindkey -M vicmd '^[i' fzf-xdg-dir
-bindkey -M viins '^[i' fzf-xdg-dir
+
+() {
+  builtin local keymap
+  for keymap in 'emacs' 'viins' 'vicmd'; do
+    bindkey -M "$keymap" '^[i' fzf-xdg-dir
+  done
+}
