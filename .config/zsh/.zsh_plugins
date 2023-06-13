@@ -10,6 +10,7 @@ Aloxaf/fzf-tab
 ${ZDOTDIR:-$HOME}/plugins/fzf.zsh
 ${ZDOTDIR:-$HOME}/plugins/colors.zsh
 ${ZDOTDIR:-$HOME}/plugins/dirnav.zsh
+${ZDOTDIR:-$HOME}/plugins/aliases.zsh
 ${ZDOTDIR:-$HOME}/plugins/history.zsh
 ${ZDOTDIR:-$HOME}/plugins/shellopts.zsh
 ${ZDOTDIR:-$HOME}/plugins/completion.zsh
