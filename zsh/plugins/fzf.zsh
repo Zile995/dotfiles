@@ -4,7 +4,6 @@ if (( $+commands[fzf] )); then
 
   export FZF_DEFAULT_OPTS="
     --height=50%
-    --layout=reverse
     --prompt='∼ ' --pointer='▶' --marker='✓'
     --color=fg:-1,bg:-1,hl:#b83b3b
     --color=fg+:#ffffff,bg+:#2b2b2b,hl+:#ff5757
