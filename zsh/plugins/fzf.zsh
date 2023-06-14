@@ -6,7 +6,10 @@ if (( $+commands[fzf] )); then
     --height=50%
     --layout=reverse
     --prompt='∼ ' --pointer='▶' --marker='✓'
-    --color info:108,prompt:65,spinner:69,pointer:65,marker:151
+    --color=fg:-1,bg:-1,hl:#b83b3b
+    --color=fg+:#ffffff,bg+:#2b2b2b,hl+:#ff5757
+    --color=pointer:#4b87c2,prompt:#72cc98
+    --color=marker:#a0dbca,spinner:#6fb375,header:#72cc98
   "
 
   if (( $+commands[fd] )); then
