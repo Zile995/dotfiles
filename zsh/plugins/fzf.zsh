@@ -3,7 +3,12 @@ if (( $+commands[fzf] )); then
   export FZF_TMUX_HEIGHT='50%'
 
   export FZF_DEFAULT_OPTS="
+    --cycle
     --height=50%
+    --bind=btab:up,tab:down,change:top
+    --bind=ctrl-a:toggle-all,ctrl-space:toggle-out
+    --bind=ctrl-h:backward-kill-word,ctrl-k:kill-line,ctrl-u:clear-query
+    --bind=alt-j:clear-query,alt-k:unix-line-discard
     --prompt='∼ ' --pointer='▶' --marker='✓'
     --color=fg:-1,bg:-1,hl:#b83b3b
     --color=fg+:#ffffff,bg+:#2b2b2b,hl+:#ff5757
