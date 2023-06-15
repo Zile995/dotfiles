@@ -2,9 +2,15 @@ copybuffer() {
   if (($+WAYLAND_DISPLAY && $+commands[wl-copy])); then
     wl-copy -n <<< $BUFFER
   elif (($+DISPLAY && $+commands[xsel])); then
-    xsel --clipboard --input <<< $BUFFER
+    printf "%s" "$BUFFER" | xsel -ib
   fi
 }
 
 zle -N copybuffer
-bindkey '^O' copybuffer
+
+() {
+  builtin local keymap
+  for keymap in 'emacs' 'viins' 'vicmd'; do
+    bindkey -M "$keymap" '^O' copybuffer
+  done
+}
