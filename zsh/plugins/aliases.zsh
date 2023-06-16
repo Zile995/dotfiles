@@ -8,13 +8,13 @@ alias lsblk='lsblk -o +fstype,label,uuid,model'
 
 # ls and cat
 alias ls='ls --color=tty'
-if (( $+commands[bat] )); then alias cat='bat -pp'; fi
+(( $+commands[bat] )) && alias cat='bat -pp'
 
 # exa with icons and colors
-if (( $+commands[exa] )); then 
-  alias exa='exa --color=auto --icons'
+(( $+commands[exa] )) && {
+  alias exa='exa --color=auto --icons' &&
   alias ll='exa --long --all --group-directories-first --git'
-fi
+}
 
 # grep with colors
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
