@@ -15,9 +15,6 @@ zstyle ':fzf-tab:*' print-query alt-p
 zstyle ':fzf-tab:*' accept-line alt-enter
 zstyle ':fzf-tab:*' fzf-bindings 'enter:accept'
 zstyle ':fzf-tab:*' continuous-trigger 'alt-right'
-
-# fzf-tab single group
-zstyle ':fzf-tab:*' single-group color
   
 # Completion description format
 zstyle ':completion:*:descriptions' format '[%d]'
