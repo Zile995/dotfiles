@@ -18,28 +18,32 @@ key[Control-Right]="${terminfo[kRIT5]}"
 key[Control-Delete]="${terminfo[kDC5]}"
 key[Control-Backspace]="${terminfo[cub1]}"
 
-# Setup terminfo keys accordingly
-[[ -n "${key[Home]}"              ]] && bindkey -- "${key[Home]}"              beginning-of-line
-[[ -n "${key[End]}"               ]] && bindkey -- "${key[End]}"               end-of-line
-[[ -n "${key[Insert]}"            ]] && bindkey -- "${key[Insert]}"            overwrite-mode
-[[ -n "${key[Backspace]}"         ]] && bindkey -- "${key[Backspace]}"         backward-delete-char
-[[ -n "${key[Delete]}"            ]] && bindkey -- "${key[Delete]}"            delete-char
-[[ -n "${key[Up]}"                ]] && bindkey -- "${key[Up]}"                up-line-or-beginning-search
-[[ -n "${key[Down]}"              ]] && bindkey -- "${key[Down]}"              down-line-or-beginning-search
-[[ -n "${key[Left]}"              ]] && bindkey -- "${key[Left]}"              backward-char
-[[ -n "${key[Right]}"             ]] && bindkey -- "${key[Right]}"             forward-char
-[[ -n "${key[PageUp]}"            ]] && bindkey -- "${key[PageUp]}"            beginning-of-buffer-or-history
-[[ -n "${key[PageDown]}"          ]] && bindkey -- "${key[PageDown]}"          end-of-buffer-or-history
-[[ -n "${key[Shift-Tab]}"         ]] && bindkey -- "${key[Shift-Tab]}"         reverse-menu-complete
-[[ -n "${key[Alt-Delete]}"        ]] && bindkey -- "${key[Alt-Delete]}"        kill-word
-[[ -n "${key[Control-Left]}"      ]] && bindkey -- "${key[Control-Left]}"      backward-word
-[[ -n "${key[Control-Right]}"     ]] && bindkey -- "${key[Control-Right]}"     forward-word
-[[ -n "${key[Control-Delete]}"    ]] && bindkey -- "${key[Control-Delete]}"    kill-word
-[[ -n "${key[Control-Backspace]}" ]] && bindkey -- "${key[Control-Backspace]}" backward-kill-word
-
-bindkey '^D'  exit-zsh
-bindkey '^[o' xdg-open-dir
-bindkey '^L'  clear-screen-and-scrollback
+# Setup keys accordingly
+() {
+  builtin local keymap
+  for keymap in 'emacs' 'viins' 'vicmd'; do
+    bindkey -M "$keymap" '^D'  exit-zsh
+    bindkey -M "$keymap" '^L'  clear-screen-and-scrollback
+    bindkey -M "$keymap" '^[o' xdg-open-dir
+    [[ -n "${key[Home]}"              ]] && bindkey -M "$keymap" "${key[Home]}"              beginning-of-line
+    [[ -n "${key[End]}"               ]] && bindkey -M "$keymap" "${key[End]}"               end-of-line
+    [[ -n "${key[Insert]}"            ]] && bindkey -M "$keymap" "${key[Insert]}"            overwrite-mode
+    [[ -n "${key[Backspace]}"         ]] && bindkey -M "$keymap" "${key[Backspace]}"         backward-delete-char
+    [[ -n "${key[Delete]}"            ]] && bindkey -M "$keymap" "${key[Delete]}"            delete-char
+    [[ -n "${key[Up]}"                ]] && bindkey -M "$keymap" "${key[Up]}"                up-line-or-beginning-search
+    [[ -n "${key[Down]}"              ]] && bindkey -M "$keymap" "${key[Down]}"              down-line-or-beginning-search
+    [[ -n "${key[Left]}"              ]] && bindkey -M "$keymap" "${key[Left]}"              backward-char
+    [[ -n "${key[Right]}"             ]] && bindkey -M "$keymap" "${key[Right]}"             forward-char
+    [[ -n "${key[PageUp]}"            ]] && bindkey -M "$keymap" "${key[PageUp]}"            beginning-of-buffer-or-history
+    [[ -n "${key[PageDown]}"          ]] && bindkey -M "$keymap" "${key[PageDown]}"          end-of-buffer-or-history
+    [[ -n "${key[Shift-Tab]}"         ]] && bindkey -M "$keymap" "${key[Shift-Tab]}"         reverse-menu-complete
+    [[ -n "${key[Alt-Delete]}"        ]] && bindkey -M "$keymap" "${key[Alt-Delete]}"        kill-word
+    [[ -n "${key[Control-Left]}"      ]] && bindkey -M "$keymap" "${key[Control-Left]}"      backward-word
+    [[ -n "${key[Control-Right]}"     ]] && bindkey -M "$keymap" "${key[Control-Right]}"     forward-word
+    [[ -n "${key[Control-Delete]}"    ]] && bindkey -M "$keymap" "${key[Control-Delete]}"    kill-word
+    [[ -n "${key[Control-Backspace]}" ]] && bindkey -M "$keymap" "${key[Control-Backspace]}" backward-kill-word
+  done
+}
 
 # Finally, make sure the terminal is in application mode, when zle is active.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
@@ -55,11 +59,11 @@ exit-zsh() { exit }
 xdg-open-dir() { xdg-open . }
 
 clear-screen-and-scrollback() {
-    echoti civis >"$TTY"
-    printf '%b' '\e[H\e[2J' >"$TTY"
-    zle .reset-prompt && zle -R
-    printf '%b' '\e[3J' >"$TTY"
-    echoti cnorm >"$TTY"
+  echoti civis >"$TTY"
+  printf '%b' '\e[H\e[2J' >"$TTY"
+  zle .reset-prompt && zle -R
+  printf '%b' '\e[3J' >"$TTY"
+  echoti cnorm >"$TTY"
 }
 
 # Autoload widgets.
