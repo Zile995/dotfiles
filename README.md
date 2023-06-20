@@ -2,8 +2,9 @@
 
 ## Necessary Arch Linux packages for zsh:
   * ```Shell
-    sudo pacman -S fzf fd exa bat git-delta zsh-completions
+    sudo pacman -S bat exa fd fzf git-delta ripgrep zsh-completions
     ```
+  * Install the Antidote plugin manager: `yay -S zsh-antidote`
   * Install the clipboard command line tools: `wl-clipboard` for Wayland or `xsel` for X11
     
 ## Enable on-demand rehash
