@@ -1,6 +1,16 @@
-# Load zsh completion 
-autoload -Uz compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
+() {
+  # Set the cache dir path
+  local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+  [[ ! -d $cache_dir ]] && mkdir -p "$cache_dir"
+
+  # Enable the completion cache and set the cache-path
+  zstyle ':completion:*' use-cache  "true"
+  zstyle ':completion:*' cache-path "$cache_dir/.zcompcache"
+
+  # Load zsh completion
+  autoload -Uz compinit && compinit -d "$cache_dir/.zcompdump"
+  autoload -U +X bashcompinit && bashcompinit
+}
 
 # Completion
 zstyle ':completion:*'                  menu              "select"
@@ -9,7 +19,6 @@ zstyle ':completion:*'                  group-name        ""
 zstyle ':completion:*'                  special-dirs      "false"
 zstyle ':completion:*'                  single-ignored    "show"
 zstyle ':completion:*'                  squeeze-slashes   "true"
-zstyle ':completion:*'                  use-cache         "true"
 zstyle ':completion:*'                  list-colors       "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*'                  matcher-list      "m:{a-zA-Z}={A-Za-z}" "r:|=*" "l:|=* r:|=*"
 zstyle ':completion:::::'               insert-tab        "pending"
