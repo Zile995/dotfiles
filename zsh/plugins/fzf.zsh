@@ -30,30 +30,35 @@ if (( $+commands[fzf] )); then
   fi
 fi
 
-# Open selected dir in file manager. 
-fzf-xdg-dir() { 
-  if (( $+commands[fd] && $+commands[fzf] && $+commands[exa] )); then
-    local selected_dir=$( \
-      $(echo $FZF_ALT_C_COMMAND) | \
-      fzf \
-      --reverse \
-      --height 60% \
-      --query=${LBUFFER} \
-      --preview 'exa -1 --icons {}' \
-    )
+# Open selected dir in file manager.
+fzf-xdg-dir() {
+  local exa_preview
+  local bat_preview
+  (( $+commands[exa] )) && exa_preview="[[ -f {} ]] || exa -1 --icons {}"
+  (( $+commands[bat] )) && bat_preview="[[ -d {} ]] || bat --color=always {}"
 
-    if [ -n "$selected_dir" ]; then
-      (xdg-open "$selected_dir" & disown &>/dev/null)
-    fi
+  setopt localoptions pipefail no_aliases 2> /dev/null
 
-    zle .reset-prompt && zle -R
-  fi
+  eval $FZF_ALT_C_COMMAND |
+  fzf \
+  --reverse \
+  --height 70% \
+  --query=${LBUFFER} \
+  --preview=$exa_preview \
+  --prompt "Directories ❯ " \
+  --header "CTRL-D: Directories / CTRL-F: Files" \
+  --bind "enter:become(xdg-open {} & disown &>/dev/null)" \
+  --bind "ctrl-f:change-prompt(Files ❯ )+reload($FZF_DEFAULT_COMMAND)+change-preview($bat_preview)+change-preview-window(70%,top,border-bottom)" \
+  --bind "ctrl-d:change-prompt(Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)+change-preview-window("")"
+
+  zle .reset-prompt && zle -R
 }
-
-zle -N fzf-xdg-dir
 
 () {
   builtin local keymap
+
+  zle -N fzf-xdg-dir
+
   for keymap in 'emacs' 'viins' 'vicmd'; do
     bindkey -M "$keymap" '^[i' fzf-xdg-dir
   done
