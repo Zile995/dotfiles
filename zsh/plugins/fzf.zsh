@@ -47,7 +47,7 @@ fzf-xdg-dir() {
   --preview=$exa_preview \
   --prompt "Directories ❯ " \
   --header "CTRL-D: Directories / CTRL-F: Files" \
-  --bind "enter:become(xdg-open {} & disown &>/dev/null)" \
+  --bind "enter:execute-silent(xdg-open {} & disown)" \
   --bind "ctrl-f:change-prompt(Files ❯ )+reload($FZF_DEFAULT_COMMAND)+change-preview($bat_preview)+change-preview-window(70%,top,border-bottom)" \
   --bind "ctrl-d:change-prompt(Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)+change-preview-window("")"
 
