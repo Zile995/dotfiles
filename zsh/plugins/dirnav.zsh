@@ -1,16 +1,3 @@
-redraw-prompt() {
-  {
-    builtin echoti civis
-    builtin local f
-    for f in chpwd "${chpwd_functions[@]}" precmd "${precmd_functions[@]}"; do
-      (( ! ${+functions[$f]} )) || "$f" &>/dev/null || builtin true
-    done
-    builtin zle reset-prompt
-  } always {
-    builtin echoti cnorm
-  }
-}
-
 cd-rotate() {
   () {
     builtin emulate -L zsh
@@ -18,10 +5,10 @@ cd-rotate() {
       builtin popd -q $1
     done
     (( $#dirstack ))
-  } "$@" && redraw-prompt
+  } "$@" && redraw_prompt
 }
 
-cd-up()      { builtin cd -q .. && redraw-prompt; }
+cd-up()      { builtin cd -q .. && redraw_prompt; }
 cd-back()    { cd-rotate +1; }
 cd-forward() { cd-rotate -0; }
 

@@ -2,7 +2,7 @@
 [[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
 
 # Autoload functions
-autoload -Uz antidote cleanup
+autoload -Uz antidote $ZDOTDIR/functions/*
 
 # Initialize plugins
 antidote load
