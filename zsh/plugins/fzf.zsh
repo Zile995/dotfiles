@@ -1,7 +1,7 @@
-if (( $+commands[fzf] )); then
-  # Set tmux height
-  export FZF_TMUX_HEIGHT='50%'
+() {
+  (( $+commands[fzf] )) || return 1
 
+  export FZF_TMUX_HEIGHT='50%'
   export FZF_DEFAULT_OPTS="
     --cycle
     --height=50%
@@ -16,19 +16,21 @@ if (( $+commands[fzf] )); then
     --color=marker:#a0dbca,spinner:#6fb375,header:#72cc98
   "
 
-  if (( $+commands[fd] )); then
-    # Set default commands. Use fd instead of the default find.
-    export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude={.git,.hg,.svn}'
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude={.git,.hg,.svn}'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  (( $+commands[fd] )) || return 
 
-    # Use fd for listing path candidates.
-    _fzf_compgen_dir() { fd --type d --hidden --exclude={.git,.hg,.svn} . "$1" }
+  local command="fd --hidden --exclude={.git,.hg,.svn}"
 
-    # Use fd to generate the list for directory completion.
-    _fzf_compgen_path() { fd --type f --hidden --exclude={.git,.hg,.svn} . "$1" }
-  fi
-fi
+  # Set default commands. Use fd instead of the default find.
+  export FZF_ALT_C_COMMAND="$command --type d"
+  export FZF_DEFAULT_COMMAND="$command --type f"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+  # Use fd for listing path candidates.
+  _fzf_compgen_dir() { eval $FZF_ALT_C_COMMAND . "$1" }
+
+  # Use fd to generate the list for directory completion.
+  _fzf_compgen_path() { eval $FZF_DEFAULT_COMMAND . "$1" }
+}
 
 # Open selected dir in file manager.
 fzf-xdg-dir() {
