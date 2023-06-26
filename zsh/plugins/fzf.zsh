@@ -16,7 +16,7 @@
     --color=marker:#a0dbca,spinner:#6fb375,header:#72cc98
   "
 
-  (( $+commands[fd] )) || return 
+  (( $+commands[fd] )) || return 1
 
   local command="fd --hidden --exclude={.git,.hg,.svn}"
 
@@ -30,6 +30,17 @@
 
   # Use fd to generate the list for directory completion.
   _fzf_compgen_path() { eval $FZF_DEFAULT_COMMAND . "$1" }
+
+  export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:5:hidden:wrap"
+  (( $+commands[exa] )) && export FZF_ALT_C_OPTS="--preview 'exa -1 --icons {}'"
+  (( $+commands[bat] )) && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
+
+  (( $+commands[wl-copy] || $+commands[xclip] )) || return 1
+
+  export FZF_CTRL_R_OPTS=$FZF_CTRL_R_OPTS"
+    --bind 'ctrl-o:execute-silent(echo -n {2..} | { wl-copy -n || xclip -r -in -sel c })+abort'
+    --header 'Press CTRL-O to copy command into clipboard'
+  "
 }
 
 # Open selected dir in file manager.
