@@ -1,8 +1,8 @@
 copybuffer() {
   if (($+WAYLAND_DISPLAY && $+commands[wl-copy])); then
     wl-copy -n <<< $BUFFER
-  elif (($+DISPLAY && $+commands[xsel])); then
-    printf "%s" "$BUFFER" | xsel -ib
+  elif (($+DISPLAY && $+commands[xclip])); then
+    xclip -r -in -sel c <<< $BUFFER
   fi
 }
 
