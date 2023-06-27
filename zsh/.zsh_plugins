@@ -3,8 +3,6 @@ romkatv/powerlevel10k
 
 # Fzf completion
 Aloxaf/fzf-tab
-/usr/share/fzf/completion.zsh
-/usr/share/fzf/key-bindings.zsh
 
 # Local plugins
 $ZDOTDIR/plugins/fzf.zsh

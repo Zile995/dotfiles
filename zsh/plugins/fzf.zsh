@@ -1,3 +1,15 @@
+load_key_bindings() {
+  local key_bindings_file="/usr/share/fzf/key-bindings.zsh"
+  # Source the key-bindings.zsh file
+  [[ -e $key_bindings_file ]] && source "$key_bindings_file"
+}
+
+# Load fzf completion
+load_completion() {
+  local completion_file="/usr/share/fzf/completion.zsh"
+  [[ -e $completion_file ]] && source "$completion_file"
+}
+
 () {
   (( $+commands[fzf] )) || return 1
 
@@ -15,6 +27,9 @@
     --color=pointer:#4b87c2,prompt:#72cc98
     --color=marker:#a0dbca,spinner:#6fb375,header:#72cc98
   "
+
+  load_completion
+  load_key_bindings
 
   (( $+commands[fd] )) || return 1
 
