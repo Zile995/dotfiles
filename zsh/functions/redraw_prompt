@@ -2,14 +2,14 @@
 # Redraw prompt
 
 redraw_prompt() {
-  {
-    builtin echoti civis
-    builtin local f
+  (( ${1:-0} )) && {
+    echoti civis
+    local f
     for f in chpwd "${chpwd_functions[@]}" precmd "${precmd_functions[@]}"; do
-      (( ! ${+functions[$f]} )) || "$f" &>/dev/null || builtin true
+      (( ! ${+functions[$f]} )) || "$f" &>/dev/null || true
     done
-    builtin zle reset-prompt
+    zle .reset-prompt
   } always {
-    builtin echoti cnorm
-  }
+    echoti cnorm
+  } || zle .reset-prompt && zle -R
 }

@@ -109,7 +109,9 @@ fzf-xdg-widget() {
     LBUFFER+="${(q)selected_item}"
     rm -f $tmp_file
   else
-    { [[ -d "$selected_item" ]] && cd "$selected_item" } || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY }
+    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } \
+      || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY && redraw_prompt } \
+      || redraw_prompt
   fi
 
   redraw_prompt

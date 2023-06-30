@@ -5,10 +5,10 @@ cd-rotate() {
       builtin popd -q $1
     done
     (( $#dirstack ))
-  } "$@" && redraw_prompt
+  } "$@" && redraw_prompt 1
 }
 
-cd-up()      { builtin cd -q .. && redraw_prompt; }
+cd-up()      { builtin cd -q .. && redraw_prompt 1; }
 cd-back()    { cd-rotate +1; }
 cd-forward() { cd-rotate -0; }
 
