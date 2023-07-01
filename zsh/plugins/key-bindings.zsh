@@ -22,9 +22,10 @@ key[Control-Backspace]="${terminfo[cub1]}"
 () {
   builtin local keymap
   for keymap in 'emacs' 'viins' 'vicmd'; do
-    bindkey -M "$keymap" '^D'  exit-zsh
-    bindkey -M "$keymap" '^L'  clear-screen-and-scrollback
-    bindkey -M "$keymap" '^[o' xdg-open-dir
+    bindkey -M "$keymap" '^D'   exit-zsh
+    bindkey -M "$keymap" '^[^R' restart-zsh
+    bindkey -M "$keymap" '^[o'  xdg-open-dir
+    bindkey -M "$keymap" '^L'   clear-screen-and-scrollback
     [[ -n "${key[Home]}"              ]] && bindkey -M "$keymap" "${key[Home]}"              beginning-of-line
     [[ -n "${key[End]}"               ]] && bindkey -M "$keymap" "${key[End]}"               end-of-line
     [[ -n "${key[Insert]}"            ]] && bindkey -M "$keymap" "${key[Insert]}"            overwrite-mode
@@ -58,6 +59,11 @@ exit-zsh() { exit }
 
 xdg-open-dir() { xdg-open . }
 
+restart-zsh() {
+  zle -I
+  exec zsh <$TTY
+}
+
 clear-screen-and-scrollback() {
   echoti civis >"$TTY"
   printf '%b' '\e[H\e[2J' >"$TTY"
@@ -72,6 +78,7 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 
 # Define new widgets
 zle -N exit-zsh
+zle -N restart-zsh
 zle -N xdg-open-dir
 zle -N clear-screen-and-scrollback
 zle -N up-line-or-beginning-search
