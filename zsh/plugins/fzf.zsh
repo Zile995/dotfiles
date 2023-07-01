@@ -1,5 +1,5 @@
 set_key_opts() {
-  export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:5:hidden:wrap"
+  export FZF_CTRL_R_OPTS="--preview 'echo {} | bat -l bash --color always -pp --wrap=character' --preview-window down:5:hidden:wrap"
   (( $+commands[exa] )) && export FZF_ALT_C_OPTS="--preview 'exa -1 --icons {}'"
   (( $+commands[bat] )) && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
 
