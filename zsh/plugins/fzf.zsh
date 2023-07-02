@@ -37,8 +37,9 @@ set_opts() {
     --cycle
     --height 50%
     --bind ctrl-z:ignore
-    --bind btab:up,tab:down,change:top
     --bind ctrl-/:toggle-preview
+    --bind bs:backward-delete-char/eof
+    --bind btab:up,tab:down,change:top
     --bind ctrl-a:toggle-all,ctrl-space:toggle-out
     --bind ctrl-h:backward-kill-word,ctrl-k:kill-line,ctrl-u:clear-query
     --bind alt-j:clear-query,alt-k:unix-line-discard
