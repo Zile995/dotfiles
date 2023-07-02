@@ -36,6 +36,7 @@ set_opts() {
   export FZF_DEFAULT_OPTS="
     --cycle
     --height 50%
+    --bind ctrl-z:ignore
     --bind btab:up,tab:down,change:top
     --bind ctrl-/:toggle-preview
     --bind ctrl-a:toggle-all,ctrl-space:toggle-out
