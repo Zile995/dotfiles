@@ -73,47 +73,24 @@ load_completion() {
   unfunction set_opts load_completion load_key_bindings
 }
 
-fzf-xdg-widget() {
+fzf-ctrl-z() {
   setopt localoptions pipefail no_aliases 2> /dev/null
 
-  local exa_preview bat_preview copy_command
+  local current_jobs="$(jobs -l)"
+  [[ ! -n "$current_jobs" ]] && return 1
 
-  local should_print=0
-  local INITIAL_QUERY="${*:-}"
-  local tmp_file="/tmp/fzf-should-print"
-  local header_text="CTRL-D: Directories / CTRL-F: Files\nCTRL-O: Copy the path / ALT-O: XDG Open / ALT-P: Print selected"
-
-  (( $+commands[exa] )) && exa_preview="[[ -f {} ]] || exa -1 --icons {}"
-  (( $+commands[bat] )) && bat_preview="[[ -d {} ]] || bat --color=always {}"
-  (( $+commands[wl-copy] || $+commands[xclip] )) &&
-     copy_command="printf '%q' $(printf '%q' $PWD)/{} | { wl-copy -n || xclip -r -in -sel c }"
-
-  local selected_item=$( \
-  : | fzf \
-    --reverse \
-    --keep-right \
-    --height "70%" \
-    --preview $exa_preview \
-    --query "$INITIAL_QUERY" \
-    --prompt "🖿  Directories ❯ " \
-    --header "$(echo -e $header_text)" \
-    --bind "start:reload($FZF_ALT_C_COMMAND)" \
-    --bind "alt-p:execute-silent(echo 1 > $tmp_file)+accept" \
-    --bind "alt-o:execute-silent(xdg-open {} & disown)" \
-    --bind "ctrl-o:execute-silent($copy_command)+abort" \
-    --bind "ctrl-f:change-prompt(  Files ❯ )+reload($FZF_DEFAULT_COMMAND)+change-preview($bat_preview)" \
-    --bind "ctrl-d:change-prompt(🖿  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)" \
-  )
-
-  [[ -e "$tmp_file" ]] && should_print=$('cat' $tmp_file)
-
-  if [ "$should_print" -eq 1 ]; then
-    LBUFFER+="${(q)selected_item}"
-    rm -f $tmp_file
+  if [[ $(wc -l <<< "$current_jobs") -gt 1 ]]; then
+    local selected_job=$( \
+      jobs -l |
+      fzf \
+      --reverse \
+      --prompt="  Search jobs ❯ " |
+      awk '{ print $1 }' |
+      tr -d '[]' \
+    )
+    [[ -n "$selected_job" ]] && { BUFFER="fg %$selected_job"; zle accept-line -w }
   else
-    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } \
-      || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY && redraw_prompt } \
-      || redraw_prompt
+    BUFFER="fg" && zle accept-line -w
   fi
 
   redraw_prompt
@@ -148,15 +125,61 @@ fzf-text-search() {
   redraw_prompt
 }
 
+fzf-xdg-widget() {
+  setopt localoptions pipefail no_aliases 2> /dev/null
+
+  local selected_item exa_preview bat_preview copy_command
+
+  local should_print=0
+  local INITIAL_QUERY="${*:-}"
+  local tmp_file="/tmp/fzf-should-print"
+  local header_text="CTRL-D: Directories / CTRL-F: Files\nCTRL-O: Copy the path / ALT-O: XDG Open / ALT-P: Print selected"
+
+  (( $+commands[exa] )) && exa_preview="[[ -f {} ]] || exa -1 --icons {}"
+  (( $+commands[bat] )) && bat_preview="[[ -d {} ]] || bat --color=always {}"
+  (( $+commands[wl-copy] || $+commands[xclip] )) &&
+     copy_command="printf '%q' $(printf '%q' $PWD)/{} | { wl-copy -n || xclip -r -in -sel c }"
+
+  selected_item=$( \
+  : | fzf \
+    --reverse \
+    --keep-right \
+    --height "70%" \
+    --preview $exa_preview \
+    --query "$INITIAL_QUERY" \
+    --prompt "🖿  Directories ❯ " \
+    --header "$(echo -e $header_text)" \
+    --bind "start:reload($FZF_ALT_C_COMMAND)" \
+    --bind "alt-p:execute-silent(echo 1 > $tmp_file)+accept" \
+    --bind "alt-o:execute-silent(xdg-open {} & disown)" \
+    --bind "ctrl-o:execute-silent($copy_command)+abort" \
+    --bind "ctrl-f:change-prompt(  Files ❯ )+reload($FZF_DEFAULT_COMMAND)+change-preview($bat_preview)" \
+    --bind "ctrl-d:change-prompt(🖿  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)" \
+  )
+
+  [[ -e "$tmp_file" ]] && should_print=$('cat' $tmp_file)
+
+  if [ "$should_print" -eq 1 ]; then
+    LBUFFER+="${(q)selected_item}"
+    rm -f $tmp_file
+  else
+    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } \
+      || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY && redraw_prompt } \
+      || redraw_prompt
+  fi
+}
+
 () {
+  zle -N fzf-ctrl-z
   zle -N fzf-xdg-widget
   zle -N fzf-text-search
 
   builtin local keymap
   for keymap in 'emacs' 'viins' 'vicmd'; do
+    bindkey -M "$keymap" '^Z'      fzf-ctrl-z
+    bindkey -M "$keymap" '^[f'     fzf-text-search
     bindkey -M "$keymap" '^[^[[B'  fzf-xdg-widget
     bindkey -M "$keymap" '^[[1;3B' fzf-xdg-widget
     bindkey -M "$keymap" '^[[1;9B' fzf-xdg-widget
-    bindkey -M "$keymap" '^[f' fzf-text-search
   done
 }
