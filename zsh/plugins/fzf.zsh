@@ -84,6 +84,8 @@ fzf-ctrl-z() {
       jobs -l |
       fzf \
       --reverse \
+      --bind "ctrl-z:accept" \
+      --header "CTRL-Z/ENTER: Run job in the foreground" \
       --prompt="  Search jobs ❯ " |
       awk '{ print $1 }' |
       tr -d '[]' \
