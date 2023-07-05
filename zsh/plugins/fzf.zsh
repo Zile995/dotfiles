@@ -59,18 +59,9 @@ load_key_bindings() {
   [[ -e $key_bindings_file ]] && source "$key_bindings_file"
 }
 
-# Load fzf completion
 load_completion() {
   local completion_file="/usr/share/fzf/completion.zsh"
   [[ -e $completion_file ]] && source "$completion_file"
-}
-
-() {
-  (( $+commands[fzf] )) || return 1
-  set_opts
-  load_completion
-  load_key_bindings
-  unfunction set_opts load_completion load_key_bindings
 }
 
 fzf-ctrl-z() {
@@ -172,6 +163,12 @@ fzf-xdg-widget() {
 }
 
 () {
+  (( $+commands[fzf] )) || return 1
+
+  set_opts
+  load_completion
+  load_key_bindings
+
   zle -N fzf-ctrl-z
   zle -N fzf-xdg-widget
   zle -N fzf-text-search
@@ -184,4 +181,6 @@ fzf-xdg-widget() {
     bindkey -M "$keymap" '^[[1;3B' fzf-xdg-widget
     bindkey -M "$keymap" '^[[1;9B' fzf-xdg-widget
   done
+
+  unfunction set_opts load_completion load_key_bindings
 }
