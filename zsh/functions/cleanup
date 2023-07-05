@@ -3,6 +3,7 @@
 # Clean pacman, AUR and flatpak package caches and orphans
 
 cleanup() {
+  (( $+commands[pacman] && $+commands[yay] && $+commands[flatpak] )) || return 1
   yes | yay -Ycc
   { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 2> /dev/null; yes | yay -Scc
   flatpak uninstall --unused --assumeyes
