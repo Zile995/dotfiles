@@ -1,5 +1,8 @@
 set_key_opts() {
-  export FZF_CTRL_R_OPTS="--preview 'echo {} | bat -l bash --color always -pp --wrap=character' --preview-window down:5:hidden:wrap"
+  local bat_preview
+  (( $+commands[bat] )) && bat_preview=" | bat -l bash --color always -pp --wrap=character"
+
+  export FZF_CTRL_R_OPTS="--preview 'echo {}$bat_preview' --preview-window down:5:hidden:wrap"
   (( $+commands[exa] )) && export FZF_ALT_C_OPTS="--preview 'exa -1 --icons {}'"
   (( $+commands[bat] )) && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
 
@@ -55,7 +58,6 @@ set_opts() {
 
 load_key_bindings() {
   local key_bindings_file="/usr/share/fzf/key-bindings.zsh"
-  # Source the key-bindings.zsh file
   [[ -e $key_bindings_file ]] && source "$key_bindings_file"
 }
 
