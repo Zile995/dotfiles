@@ -8,6 +8,7 @@ setopt AUTO_MENU
 setopt GLOB_DOTS
 setopt NO_BG_NICE
 setopt ALWAYS_TO_END
+setopt GLOBSTARSHORT
 setopt NO_LIST_TYPES
 setopt TYPESET_SILENT
 setopt NO_FLOW_CONTROL
