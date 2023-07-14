@@ -44,3 +44,12 @@ alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
 # Write all cached data to disk and free slab objects and pagecache
 alias clearcaches='sudo sync && echo 3 | sudo tee -a /proc/sys/vm/drop_caches 1> /dev/null'
+
+# Global aliases
+alias -g H='| head'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g W='| wc -l'
+alias -g D='& disown'
+alias -g NE='2> /dev/null'
+alias -g NO='> /dev/null 2>&1'
