@@ -10,6 +10,9 @@ alias mkdir='mkdir -pv'
 alias df='df -hT'
 alias du='du -hs'
 
+# kill, immediately terminate a process
+alias kill='kill -9'
+
 # xdg-open, open with the default program
 alias xo='xdg-open'
 
