@@ -6,6 +6,10 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 
+# df and du
+alias df='df -hT'
+alias du='du -hs'
+
 # dd with progress
 alias dd='dd status=progress'
 
