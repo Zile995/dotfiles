@@ -1,5 +1,11 @@
 # Aliases
 
+# ln, cp, mv, mkdir
+alias ln='ln -i'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
+
 # dd with progress
 alias dd='dd status=progress'
 
