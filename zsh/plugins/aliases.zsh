@@ -27,10 +27,14 @@ alias ls='ls --color=tty'
 (( $+commands[bat] )) && alias cat='bat -pp'
 
 # exa with icons and colors
-(( $+commands[exa] )) && {
-  alias exa='exa --color=auto --icons' &&
-  alias ll='exa --long --all --group-directories-first --git'
-}
+if (( $+commands[exa] )); then
+  alias exa='exa --color=auto --icons'
+  alias ll='exa --long --group-directories-first --git'
+  alias la='exa --long --all --group-directories-first --git'
+else
+  alias ll='ls -lh'
+  alias la='ls -lAh'
+fi
 
 # grep with colors
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
