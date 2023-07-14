@@ -10,6 +10,9 @@ alias mkdir='mkdir -pv'
 alias df='df -hT'
 alias du='du -hs'
 
+# xdg-open, open with the default program
+alias xo='xdg-open'
+
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
 
