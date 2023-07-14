@@ -36,6 +36,9 @@ else
   alias la='ls -lAh'
 fi
 
+# Update Pacman, AUR and Flatpak packages
+(( $+commands[yay] && $+commands[flatpak] )) && alias update='yay && flatpak update'
+
 # grep with colors
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
