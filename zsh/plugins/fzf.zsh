@@ -155,13 +155,14 @@ fzf-xdg-widget() {
   [[ -e "$tmp_file" ]] && should_print=$('cat' $tmp_file)
 
   if [ "$should_print" -eq 1 ]; then
-    LBUFFER+="${(q)selected_item}" && redraw_prompt
+    LBUFFER+="${(q)selected_item}"
     rm -f $tmp_file
   else
-    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } \
-      || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY && redraw_prompt } \
-      || redraw_prompt
+    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } && return 1 \
+      || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY }
   fi
+
+  redraw_prompt
 }
 
 () {
