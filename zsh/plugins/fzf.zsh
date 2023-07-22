@@ -142,14 +142,14 @@ fzf-xdg-widget() {
     --height "70%" \
     --preview $exa_preview \
     --query "$INITIAL_QUERY" \
-    --prompt "🖿  Directories ❯ " \
+    --prompt "󰉋  Directories ❯ " \
     --header "$(echo -e $header_text)" \
     --bind "start:reload($FZF_ALT_C_COMMAND)" \
     --bind "alt-p:execute-silent(echo 1 > $tmp_file)+accept" \
     --bind "alt-o:execute-silent(xdg-open {} & disown)" \
     --bind "ctrl-o:execute-silent($copy_command)+abort" \
     --bind "ctrl-f:change-prompt(  Files ❯ )+reload($FZF_DEFAULT_COMMAND)+change-preview($bat_preview)" \
-    --bind "ctrl-d:change-prompt(🖿  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)" \
+    --bind "ctrl-d:change-prompt(󰉋  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)" \
   )
 
   [[ -e "$tmp_file" ]] && should_print=$('cat' $tmp_file)
