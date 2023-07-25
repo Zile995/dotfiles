@@ -25,19 +25,20 @@ alias dd='dd status=progress'
 # Better lsblk defaults
 alias lsblk='lsblk -o +fstype,label,uuid,model'
 
-# ls and cat
-alias ls='ls --color=tty'
+# cat
 (( $+commands[bat] )) && alias cat='bat -pp'
 
-# exa with icons and colors
-if (( $+commands[exa] )); then
+# exa or ls with colors
+(( $+commands[exa] )) && {
   alias exa='exa --color=auto --icons'
+  alias ls='exa'
   alias ll='exa --long --group-directories-first --git'
   alias la='exa --long --all --group-directories-first --git'
-else
+} || {
+  alias ls='ls --color=tty'
   alias ll='ls -lh'
   alias la='ls -lAh'
-fi
+}
 
 # Update Pacman, AUR and Flatpak packages
 (( $+commands[yay] && $+commands[flatpak] )) && alias update='yay && flatpak update'
