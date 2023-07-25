@@ -58,6 +58,11 @@ alias -g D='& disown'
 alias -g NE='2> /dev/null'
 alias -g NO='> /dev/null 2>&1'
 
+# Global loop alias
+alias -g FORI='| while read i ; do '
+alias -g IROF='; done '
+
+# Clipboard alias
 { (( $+WAYLAND_DISPLAY && $+commands[wl-copy] )) && alias -g CC='| wl-copy -n' } || {
   (( $+DISPLAY && $+commands[xclip] )) && alias -g CC='| xclip -r -in -sel c' 
 }
