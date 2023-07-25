@@ -52,6 +52,7 @@ alias clearcaches='sudo sync && echo 3 | sudo tee -a /proc/sys/vm/drop_caches 1>
 alias -g H='| head'
 alias -g G='| grep'
 alias -g L='| less'
+alias -g T='| tail'
 alias -g W='| wc -l'
 alias -g X='| xargs'
 alias -g D='& disown'
