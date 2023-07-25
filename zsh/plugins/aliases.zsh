@@ -56,3 +56,7 @@ alias -g W='| wc -l'
 alias -g D='& disown'
 alias -g NE='2> /dev/null'
 alias -g NO='> /dev/null 2>&1'
+
+{ (( $+WAYLAND_DISPLAY && $+commands[wl-copy] )) && alias -g CC='| wl-copy -n' } || {
+  (( $+DISPLAY && $+commands[xclip] )) && alias -g CC='| xclip -r -in -sel c' 
+}
