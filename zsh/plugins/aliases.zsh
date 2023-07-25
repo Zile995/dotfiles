@@ -28,6 +28,9 @@ alias lsblk='lsblk -o +fstype,label,uuid,model'
 # cat
 (( $+commands[bat] )) && alias cat='bat -pp'
 
+# ping
+alias ping='ping -c 4'
+
 # exa or ls with colors
 (( $+commands[exa] )) && {
   alias exa='exa --color=auto --icons'
