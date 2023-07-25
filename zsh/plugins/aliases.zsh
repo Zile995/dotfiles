@@ -55,8 +55,8 @@ alias -g L='| less'
 alias -g W='| wc -l'
 alias -g X='| xargs'
 alias -g D='& disown'
-alias -g NE='2> /dev/null'
-alias -g NO='> /dev/null 2>&1'
+alias -g NSE='2> /dev/null'
+alias -g NSO='> /dev/null 2>&1'
 
 # Global loop alias
 alias -g FORI='| while read i ; do '
