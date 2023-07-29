@@ -125,7 +125,6 @@ fzf-xdg-widget() {
 
   local selected_item exa_preview bat_preview copy_command
 
-  local should_print=0
   local INITIAL_QUERY="${*:-}"
   local tmp_file="/tmp/fzf-should-print"
   local header_text="CTRL-D: Directories / CTRL-F: Files\nCTRL-O: Copy the path / ALT-O: XDG Open / ALT-P: Print selected"
@@ -133,7 +132,7 @@ fzf-xdg-widget() {
   (( $+commands[exa] )) && exa_preview="[[ -f {} ]] || exa -1 --icons {}"
   (( $+commands[bat] )) && bat_preview="[[ -d {} ]] || bat --color=always {}"
   (( $+commands[wl-copy] || $+commands[xclip] )) &&
-     copy_command="printf '%q' $(printf '%q' $PWD)/{} | { wl-copy -n || xclip -r -in -sel c }"
+    copy_command="printf '%q' $(printf '%q' $PWD)/{} | { wl-copy -n || xclip -r -in -sel c }"
 
   selected_item=$( \
   : | fzf \
@@ -152,14 +151,14 @@ fzf-xdg-widget() {
     --bind "ctrl-d:change-prompt(󰉋  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)" \
   )
 
-  [[ -e "$tmp_file" ]] && should_print=$('cat' $tmp_file)
+  [[ -e "$tmp_file" ]] && local should_print=$('cat' $tmp_file)
 
   if [ "$should_print" -eq 1 ]; then
     LBUFFER+="${(q)selected_item}"
-    rm -f $tmp_file
+    rm -f "$tmp_file"
   else
-    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } && return 1 \
-      || { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY }
+    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } && return 1 || \
+      { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY }
   fi
 
   redraw_prompt
