@@ -7,8 +7,9 @@ kreboot() {
   local pkgbase="$1"
   [[ -z "$1" ]] && \
     pkgbase=$('find' /usr/lib/modules/$('uname' -r) \
-      -mindepth 1 -maxdepth 1 ! -path '*/\.*' ! -path '*/build' -type d | \
-      'xargs' -I {} 'pacman' -Qqo {})
+      -mindepth 1 -maxdepth 1 \
+      ! -path '*/\.*' ! -path '*/build' -type d \
+      -exec 'pacman' -Qqo {} \;)
   [[ -z "$pkgbase" ]] && echo "Unable to find kernel modules" && return 1
 
   # vmlinuz path

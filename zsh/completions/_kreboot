@@ -1,3 +1,11 @@
 #compdef kreboot
 
-compadd $('find' /usr/lib/modules/* -mindepth 1 -maxdepth 1 ! -path '*/\.*' ! -path '*/build' -type d | 'xargs' -I {} 'pacman' -Qqo {} | 'sort' -n)
+_kreboot() {
+  if (( CURRENT == 2 )); then
+    compadd $('find' /usr/lib/modules/* \
+      -mindepth 1 -maxdepth 1 \
+      ! -path '*/\.*' ! -path '*/build' -type d \
+      -exec 'pacman' -Qqo {} \; | \
+      'sort' -n)
+  fi
+}
