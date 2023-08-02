@@ -1,0 +1,26 @@
+#!/bin/zsh
+
+kreboot() {
+  (( $+commands[pacman] && $+commands[systemctl] )) || return 1
+
+  # set pkgbase
+  local pkgbase="$1"
+  [[ -z "$1" ]] && \
+    pkgbase=$('find' /usr/lib/modules/$('uname' -r) \
+      -mindepth 1 -maxdepth 1 ! -path '*/\.*' ! -path '*/build' -type d | \
+      'xargs' -I {} 'pacman' -Qqo {})
+  [[ -z "$pkgbase" ]] && echo "Unable to find kernel modules" && return 1
+
+  # vmlinuz path
+  local vmlinuz
+  vmlinuz="/boot/vmlinuz-${pkgbase}"
+  [[ ! -e "$vmlinuz" ]] && echo "Unable to find compressed kernel image, vmlinuz-${pkgbase}" && return 1
+
+  # initramfs path
+  local initramfs="/boot/booster-${pkgbase}.img"
+  [[ ! -e "$initramfs" ]] && initramfs="/boot/initramfs-${pkgbase}.img"
+  [[ ! -e "$initramfs" ]] && echo "Unable to find initial ramdisk for ${pkgbase} kernel" && return 1
+
+  sudo 'kexec' -l "${vmlinuz}" --initrd="${initramfs}" --reuse-cmdline
+  systemctl kexec
+}
