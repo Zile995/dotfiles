@@ -34,10 +34,12 @@ alias ping='ping -c 4'
 # exa or ls with colors
 (( $+commands[exa] )) && {
   alias exa='exa --color=auto --icons'
+  alias l.='exa -d .*'
   alias ls='exa'
   alias ll='exa --long --group-directories-first --git'
   alias la='exa --long --all --group-directories-first --git'
 } || {
+  alias l.='ls -d .* --color=tty'
   alias ls='ls --color=tty'
   alias ll='ls -lh'
   alias la='ls -lAh'
