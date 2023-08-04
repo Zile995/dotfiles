@@ -2,10 +2,11 @@
 
 _kreboot() {
   if (( CURRENT == 2 )); then
-    compadd $('find' /usr/lib/modules/* \
+    compadd $(find /usr/lib/modules/* \
       -mindepth 1 -maxdepth 1 \
       ! -path '*/\.*' ! -path '*/build' -type d \
-      -exec 'pacman' -Qqo {} \; | \
-      'sort' -n)
+      -exec sh -c \
+      'if pacman -Qqo "$(dirname $0)/pkgbase" > /dev/null 2>&1; then pacman -Qqo $0; fi;' {} \; | \
+      sort -n)
   fi
 }
