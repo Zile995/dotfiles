@@ -36,8 +36,8 @@ alias ping='ping -c 4'
   alias exa='exa --color=auto --icons'
   alias l.='exa -d .*'
   alias ls='exa'
-  alias ll='exa --long --group-directories-first --git'
-  alias la='exa --long --all --group-directories-first --git'
+  alias ll='exa -l --group-directories-first --git'
+  alias la='exa -la --group-directories-first --git'
 } || {
   alias l.='ls -d .* --color=tty'
   alias ls='ls --color=tty'
@@ -68,11 +68,11 @@ alias -g D='& disown'
 alias -g NSE='2> /dev/null'
 alias -g NSO='> /dev/null 2>&1'
 
-# Global loop alias
+# Global loop aliases
 alias -g FORI='| while read i ; do '
 alias -g IROF='; done '
 
-# Clipboard alias
+# Gloval clipboard alias
 { (( $+WAYLAND_DISPLAY && $+commands[wl-copy] )) && alias -g CC='| wl-copy -n' } || {
-  (( $+DISPLAY && $+commands[xclip] )) && alias -g CC='| xclip -r -in -sel c' 
+  (( $+DISPLAY && $+commands[xclip] )) && alias -g CC='| xclip -r -in -sel c'
 }
