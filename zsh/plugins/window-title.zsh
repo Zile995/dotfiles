@@ -2,11 +2,10 @@ autoload -Uz add-zsh-hook
 
 set-title() {
   emulate -L zsh -o no_prompt_bang -o prompt_subst -o prompt_percent -o no_prompt_subst
-  local title=$1
-  shift
+  local title=$1; shift
   print -Prnv title -- $title
   printf -v title "\e]0;%s\a" "${(V)title}"
-  print -Pn -- $title >$TTY
+  print -rn -- $title >$TTY
 }
 
 title-precmd() {
