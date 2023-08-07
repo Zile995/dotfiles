@@ -25,6 +25,7 @@ key[Control-Backspace]="${terminfo[cub1]}"
     bindkey -M "$keymap" '^D'   exit-zsh
     bindkey -M "$keymap" '^[^R' restart-zsh
     bindkey -M "$keymap" '^[o'  xdg-open-dir
+    bindkey -M "$keymap" '^X^S' prepend-sudo
     bindkey -M "$keymap" '^X^E' edit-command-line
     bindkey -M "$keymap" '^L'   clear-screen-and-scrollback
     [[ -n "${key[Home]}"              ]] && bindkey -M "$keymap" "${key[Home]}"              beginning-of-line
@@ -68,6 +69,13 @@ clear-screen-and-scrollback() {
   echoti cnorm >"$TTY"
 }
 
+prepend-sudo() {
+  if [[ "$BUFFER" != su(do|)\ * ]]; then
+    BUFFER="sudo $BUFFER"
+    (( CURSOR += 5 ))
+  fi
+}
+
 # Autoload widgets.
 autoload -U edit-command-line
 autoload -U select-word-style && select-word-style bash
@@ -76,6 +84,7 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 # Define new widgets
 zle -N exit-zsh
 zle -N restart-zsh
+zle -N prepend-sudo
 zle -N xdg-open-dir
 zle -N edit-command-line
 zle -N clear-screen-and-scrollback
