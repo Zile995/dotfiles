@@ -46,7 +46,10 @@ alias ping='ping -c 4'
 }
 
 # systemctl soft-reboot
-(( $+commands[systemctl] )) && alias sreboot='systemctl soft-reboot'
+(( $+commands[systemctl] )) && {
+  alias sreboot='systemctl soft-reboot'
+  alias freboot='systemctl reboot --firmware-setup'
+}
 
 # Update Pacman, AUR and Flatpak packages
 (( $+commands[yay] && $+commands[flatpak] )) && alias update='yay && flatpak update'
