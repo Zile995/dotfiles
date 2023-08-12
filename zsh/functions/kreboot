@@ -8,9 +8,9 @@ kreboot() {
   [[ -z "$1" ]] && \
     pkgbase=$(find /usr/lib/modules/$(uname -r) \
       -mindepth 1 -maxdepth 1 \
-      ! -path '*/\.*' ! -path '*/build' -type d \
-      -exec sh -c \
-      'if ! pacman -Qqo "$(dirname $0)/pkgbase" > /dev/null 2>&1; then [[ -e "$(dirname $0)/pkgbase" && "$(basename $(dirname $0))" = "$(uname -r)" ]] && cat "$(dirname $0)/pkgbase"; else pacman -Qqo $0; fi;' {} \;)
+      ! -path '*/\.*' ! -path '*/build' -type f -name 'pkgbase' \
+      -exec sh -c 'if pacman -Qqo -- "$0" > /dev/null 2>&1; then cat "$0"; fi;' {} \;)
+
   [[ -z "$pkgbase" ]] && echo "Unable to find valid modules of the currently running $(uname -r) kernel." && return 1
 
   # vmlinuz path
