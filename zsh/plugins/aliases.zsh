@@ -54,6 +54,10 @@ alias ping='ping -c 4'
 # Update Pacman, AUR and Flatpak packages
 (( $+commands[yay] && $+commands[flatpak] )) && alias update='yay && flatpak update'
 
+# Reset all pacman keys
+(( $+commands[pacman] )) && \
+  alias resetkeys='sudo zsh -c "rm -rf /etc/pacman.d/gnupg; pacman-key --init; pacman-key --populate"'
+
 # grep with colors
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
