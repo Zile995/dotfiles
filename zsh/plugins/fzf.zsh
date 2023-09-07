@@ -3,7 +3,7 @@ set_key_opts() {
   (( $+commands[bat] )) && bat_preview=" | bat -l bash --color always -pp --wrap=character"
 
   export FZF_CTRL_R_OPTS="--preview 'echo {}$bat_preview' --preview-window down:5:hidden:wrap"
-  (( $+commands[exa] )) && export FZF_ALT_C_OPTS="--preview 'exa -1 --icons {}'"
+  (( $+commands[eza] )) && export FZF_ALT_C_OPTS="--preview 'eza -1 --icons {}'"
   (( $+commands[bat] )) && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
 
   (( $+commands[wl-copy] || $+commands[xclip] )) || return 1
@@ -83,7 +83,7 @@ fzf-ctrl-z() {
       awk '{ print $1 }' |
       tr -d '[]' \
     )
-    [[ -n "$selected_job" ]] && { BUFFER="fg %$selected_job"; zle accept-line -w }
+    [[ -n $selected_job ]] && { BUFFER="fg %$selected_job"; zle accept-line -w }
   else
     BUFFER="fg" && zle accept-line -w
   fi
@@ -121,16 +121,18 @@ fzf-text-search() {
 }
 
 fzf-xdg-widget() {
+  (( $+commands[eza] || $+commands[bat] )) || return 1
+
   setopt localoptions pipefail no_aliases 2> /dev/null
 
-  local selected_item exa_preview bat_preview copy_command
+  local selected_item eza_preview bat_preview copy_command
 
   local INITIAL_QUERY="${*:-}"
   local tmp_file="/tmp/fzf-should-print"
   local header_text="CTRL-D: Directories / CTRL-F: Files\nCTRL-O: Copy the path / ALT-O: XDG Open / ALT-P: Print selected"
 
-  (( $+commands[exa] )) && exa_preview="[[ -f {} ]] || exa -1 --icons {}"
-  (( $+commands[bat] )) && bat_preview="[[ -d {} ]] || bat --color=always {}"
+  eza_preview="[[ -f {} ]] || eza -1 --icons {}"
+  bat_preview="[[ -d {} ]] || bat --color=always {}"
   (( $+commands[wl-copy] || $+commands[xclip] )) &&
     copy_command="printf '%q' $(printf '%q' $PWD)/{} | { wl-copy -n || xclip -r -in -sel c }"
 
@@ -139,7 +141,7 @@ fzf-xdg-widget() {
     --reverse \
     --keep-right \
     --height "70%" \
-    --preview $exa_preview \
+    --preview $eza_preview \
     --query "$INITIAL_QUERY" \
     --prompt "󰉋  Directories ❯ " \
     --header "$(echo -e $header_text)" \
@@ -148,17 +150,17 @@ fzf-xdg-widget() {
     --bind "alt-o:execute-silent(xdg-open {} & disown)" \
     --bind "ctrl-o:execute-silent($copy_command)+abort" \
     --bind "ctrl-f:change-prompt(  Files ❯ )+reload($FZF_DEFAULT_COMMAND)+change-preview($bat_preview)" \
-    --bind "ctrl-d:change-prompt(󰉋  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($exa_preview)" \
+    --bind "ctrl-d:change-prompt(󰉋  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($eza_preview)" \
   )
 
-  [[ -e "$tmp_file" ]] && local should_print=$('cat' $tmp_file)
+  [[ -e $tmp_file ]] && local should_print=$('cat' $tmp_file)
 
   if [ "$should_print" -eq 1 ]; then
     LBUFFER+="${(q)selected_item}"
     rm -f "$tmp_file"
   else
-    { [[ -d "$selected_item" ]] && cd "$selected_item" && redraw_prompt 1 } && return 1 || \
-      { [[ -f "$selected_item" ]] && $EDITOR "$selected_item" <$TTY }
+    { [[ -d $selected_item ]] && cd "$selected_item" && redraw_prompt 1 } && return 1 || \
+      { [[ -f $selected_item ]] && $EDITOR "$selected_item" <$TTY }
   fi
 
   redraw_prompt

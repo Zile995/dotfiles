@@ -31,16 +31,16 @@ alias lsblk='lsblk -o +fstype,label,uuid,model'
 # ping
 alias ping='ping -c 4'
 
-# exa or ls with colors
-(( $+commands[exa] )) && {
-  alias exa='exa --color=auto --icons'
-  alias l.='exa -d .*'
-  alias ls='exa'
-  alias ll='exa -l --group-directories-first --git'
-  alias la='exa -la --group-directories-first --git'
+# eza or ls with colors
+(( $+commands[eza] )) && {
+  alias eza='eza --color=auto --icons'
+  alias l.='eza -d .*'
+  alias ls='eza'
+  alias ll='eza -l --group-directories-first --git'
+  alias la='eza -la --group-directories-first --git'
 } || {
-  alias l.='ls -d .* --color=tty'
   alias ls='ls --color=tty'
+  alias l.='ls -d .*'
   alias ll='ls -lh'
   alias la='ls -lAh'
 }
