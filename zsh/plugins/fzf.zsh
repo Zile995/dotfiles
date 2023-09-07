@@ -69,12 +69,12 @@ load_completion() {
 fzf-ctrl-z() {
   setopt localoptions pipefail no_aliases 2> /dev/null
 
-  local current_jobs="$(jobs -l)"
-  [[ ! -n "$current_jobs" ]] && return 1
+  local current_jobs=("${(@f)$(jobs -l)}")
+  [[ ! -n $current_jobs ]] && return 1
 
-  if [[ $(wc -l <<< "$current_jobs") -gt 1 ]]; then
+  if [[ ${#current_jobs} -gt 1 ]]; then
     local selected_job=$( \
-      jobs -l |
+      printf "%s\n" "${current_jobs[@]}" |
       fzf \
       --reverse \
       --bind "ctrl-z:accept" \
