@@ -1,9 +1,8 @@
 # Aliases
 
-# ln, cp, mv, mkdir
-alias ln='ln -i'
-alias cp='cp -iv'
-alias mv='mv -iv'
+# cp, mv, mkdir
+alias cp='cp -v'
+alias mv='mv -v'
 alias mkdir='mkdir -pv'
 
 # df and du
