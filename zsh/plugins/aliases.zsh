@@ -33,6 +33,7 @@ alias ping='ping -c 4'
 # eza or ls with colors
 (( $+commands[eza] )) && {
   alias eza='eza --color=auto --icons'
+  alias exa='eza'
   alias l.='eza -d .*'
   alias ls='eza'
   alias ll='eza -l --group-directories-first --git'
