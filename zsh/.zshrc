@@ -5,6 +5,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Start tmux
+if (( $+commands[tmux] )) && [[ -n ${DISPLAY} ]] && [[ -z ${TMUX} ]]; then
+  exec tmux new-session -A -s ${USER} >/dev/null 2>&1
+fi
+
 # Load zstyles
 [[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
 
