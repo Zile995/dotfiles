@@ -4,8 +4,7 @@ set-title() {
   emulate -L zsh -o no_prompt_bang -o prompt_subst -o prompt_percent -o no_prompt_subst
   local title=$1
   print -Prnv title -- $title
-  printf -v title "\e]0;%s\a" "${(V)title}"
-  print -rn -- $title >$TTY
+  print -Pn -- "\e]0;${title}\a" >$TTY
 }
 
 title-precmd() {
