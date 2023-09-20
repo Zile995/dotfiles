@@ -80,6 +80,6 @@ alias -g FORI='| while read i ; do '
 alias -g IROF='; done '
 
 # Gloval clipboard alias
-{ (( $+WAYLAND_DISPLAY && $+commands[wl-copy] )) && alias -g CC='| wl-copy -n' } || {
+(( $+WAYLAND_DISPLAY && $+commands[wl-copy] )) && alias -g CC='| wl-copy -n' || {
   (( $+DISPLAY && $+commands[xclip] )) && alias -g CC='| xclip -r -in -sel c'
 }
