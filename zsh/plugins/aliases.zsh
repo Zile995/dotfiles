@@ -57,6 +57,12 @@ alias ping='ping -c 4'
 # Colorize pactree by default
 (( $+commands[pactree] )) && alias pactree='pactree -c'
 
+# git diff alias
+(( $+commands[git] )) && alias gd='git diff'
+
+# Use delta with git diff
+(( $+commands[git] && $+commands[delta] )) && alias gdd='git diff | delta'
+
 # Reset all pacman keys
 (( $+commands[pacman] )) && \
   alias resetkeys='sudo zsh -c "rm -rf /etc/pacman.d/gnupg; pacman-key --init; pacman-key --populate"'
