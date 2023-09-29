@@ -54,6 +54,9 @@ alias ping='ping -c 4'
 # Update Pacman, AUR and Flatpak packages
 (( $+commands[yay] && $+commands[flatpak] )) && alias update='yay && flatpak update'
 
+# Colorize pactree by default
+(( $+commands[pactree] )) && alias pactree='pactree -c'
+
 # Reset all pacman keys
 (( $+commands[pacman] )) && \
   alias resetkeys='sudo zsh -c "rm -rf /etc/pacman.d/gnupg; pacman-key --init; pacman-key --populate"'
