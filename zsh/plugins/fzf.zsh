@@ -141,7 +141,7 @@ fzf-xdg-widget() {
     --reverse \
     --keep-right \
     --height "70%" \
-    --preview $eza_preview \
+    --preview "$eza_preview" \
     --query "$INITIAL_QUERY" \
     --prompt "󰉋  Directories ❯ " \
     --header "$(echo -e $header_text)" \
@@ -166,6 +166,55 @@ fzf-xdg-widget() {
   redraw_prompt
 }
 
+fzf-package-install() {
+  (( $+commands[yay] && $+commands[pacman] )) || return 1
+
+  setopt localoptions pipefail no_aliases 2> /dev/null
+
+  local preview="yay -Si {1}"
+  local yay_search="yay -Salq"
+  local pacman_search="pacman -Slq"
+
+  local logo="󰣇"
+  local prompt_text="Search the packages ❯ "
+  local header_text="[󱧕 Install the packages]\n[F1]: Official / [F2]: AUR"
+
+  : | fzf \
+    --multi \
+    --reverse \
+    --height "70%" \
+    --preview "$preview" \
+    --query "$LBUFFER" \
+    --prompt "$logo [Official] $prompt_text" \
+    --header "$(echo -e $header_text)" \
+    --bind "start:reload($pacman_search)" \
+    --bind "f2:change-prompt($logo [AUR] $prompt_text)+reload($yay_search)" \
+    --bind "f1:change-prompt($logo [Official] $prompt_text)+reload($pacman_search)" | xargs -ro yay -S
+
+  redraw_prompt
+}
+
+fzf-package-remove() {
+  (( $+commands[pacman] )) || return 1
+
+  setopt localoptions pipefail no_aliases 2> /dev/null
+
+  local preview="pacman -Qi {1}"
+  local pacman_search="pacman -Qq"
+
+  : | fzf \
+    --multi \
+    --reverse \
+    --height "70%" \
+    --query "$LBUFFER" \
+    --preview "$preview" \
+    --header "[󱧖 Remove the packages]" \
+    --prompt "󰣇 Search the packages ❯ " \
+    --bind "start:reload($pacman_search)" | xargs -ro sudo pacman -Rns
+
+  redraw_prompt
+}
+
 () {
   (( $+commands[fzf] )) || return 1
 
@@ -176,6 +225,8 @@ fzf-xdg-widget() {
   zle -N fzf-ctrl-z
   zle -N fzf-xdg-widget
   zle -N fzf-text-search
+  zle -N fzf-package-remove
+  zle -N fzf-package-install
 
   builtin local keymap
   for keymap in 'emacs' 'viins' 'vicmd'; do
@@ -184,6 +235,8 @@ fzf-xdg-widget() {
     bindkey -M "$keymap" '^[^[[B'  fzf-xdg-widget
     bindkey -M "$keymap" '^[[1;3B' fzf-xdg-widget
     bindkey -M "$keymap" '^[[1;9B' fzf-xdg-widget
+    bindkey -M "$keymap" '^[r'     fzf-package-remove
+    bindkey -M "$keymap" '^[i'     fzf-package-install
   done
 
   unfunction set_opts load_completion load_key_bindings
