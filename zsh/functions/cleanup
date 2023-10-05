@@ -1,12 +1,23 @@
 #!/bin/zsh
-# Clean systemd journal and coredump
-# Clean pacman, AUR and flatpak package caches and orphans
+# Cleanup systemd journal and coredump files
+# Cleanup pacman, AUR and flatpak package caches and orphans
 
 cleanup() {
-  (( $+commands[pacman] && $+commands[yay] && $+commands[flatpak] )) || return 1
-  yes | yay -Ycc
-  { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 2> /dev/null; yes | yay -Scc
-  flatpak uninstall --unused --assumeyes
+  # Clean orphans, unused pacman and flatpak packages
+  (( $+commands[yay] )) && yes | yay -Ycc
+  (( $+commands[pacman] )) && { pacman -Qttdq | sudo pacman -Rnsu --noconfirm - } 2> /dev/null
+  (( $+commands[flatpak] )) && flatpak uninstall --unused --assumeyes
+
+  # Clean yay and pacman cache
+  (( $+commands[yay] )) && yes | yay -Scc || {
+    (( $+commands[pacman] )) && yes | sudo pacman -Scc
+  }
+
+  # Clean systemd journal
+  (( $+commands[journalctl] )) && \
   sudo journalctl --rotate && sudo journalctl --vacuum-time=1d
-  { sudo rm -rf /var/lib/systemd/coredump/* } > /dev/null 2>&1
+
+  # Clean coredump files
+  (( $+commands[coredumpctl] )) && \
+  { sudo rm -rf /var/lib/systemd/coredump/* } > /dev/null 2>&1 || :
 }
