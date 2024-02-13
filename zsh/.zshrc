@@ -22,7 +22,6 @@ antidote load
 # Zsh syntax highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line root)
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
