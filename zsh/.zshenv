@@ -12,10 +12,14 @@ ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
   # Ensure fpath array does not contain duplicates
   typeset -gU fpath
 
-  local antidote_package_path
-  local antidote_zdotdir_path="${ZDOTDIR}/.antidote"
-  [[ -e "/usr/share/zsh-antidote" ]] && antidote_package_path="/usr/share/zsh-antidote"
-  local antidote_fpath=${antidote_package_path:-$antidote_zdotdir_path}/functions
+  local antidote_path=/usr/share/zsh-antidote
+  [[ ! -d $antidote_path ]] &&
+    antidote_path="${ZDOTDIR}/.antidote"
+
+  [[ ! -d $antidote_path ]] && (( $+commands[git] )) &&
+    git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_path"
+
+  local antidote_fpath="${antidote_path}/functions"
 
   # Add functions paths
   fpath=(
