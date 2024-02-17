@@ -24,8 +24,10 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
 
 # ZSH history substring search
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=23,fg=79,bold'
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=1,fg=217,bold'
+[[ $DISPLAY || $WAYLAND_DISPLAY ]] && {
+  HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=23,fg=79,bold'
+  HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=1,fg=217,bold'
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
