@@ -26,9 +26,6 @@ zstyle ':fzf-tab:complete:tldr:argument-1' fzf-flags --preview-window=up:60%:bor
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons $realpath'
 zstyle ':fzf-tab:complete:systemctl-(status|(re|)start|(dis|en)able):*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
 
-# kreboot
-zstyle ':fzf-tab:complete:kreboot:*' fzf-preview 'pacman -Qi $word'
-
 # Kill and ps
 zstyle ':fzf-tab:complete:(kill|ps):*' fzf-preview \
        '[[ $group == "[process ID]" ]] && ps --pid=$word -o cmd --no-headers -w -w'
