@@ -13,19 +13,17 @@ ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
   typeset -gU fpath
 
   local antidote_path=/usr/share/zsh-antidote
-  [[ ! -d $antidote_path ]] &&
+  [[ ! -r ${antidote_path}/antidote.zsh ]] && {
     antidote_path="${ZDOTDIR}/.antidote"
-
-  [[ ! -d $antidote_path ]] && (( $+commands[git] )) &&
-    git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_path"
-
-  local antidote_fpath="${antidote_path}/functions"
+  	[[ ! -r ${antidote_path}/antidote.zsh ]] && (( $+commands[git] )) &&
+      git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_path"
+  }
 
   # Add functions paths
   fpath=(
-    $antidote_fpath
-    $ZDOTDIR/functions
-    $ZDOTDIR/completions
+    ${ZDOTDIR}/functions
+    ${ZDOTDIR}/completions
+    ${antidote_path}/functions
     $fpath
   )
 }

@@ -33,8 +33,8 @@ key[Control-Backspace]="${terminfo[cub1]}"
     [[ -n "${key[Insert]}"            ]] && bindkey -M "$keymap" "${key[Insert]}"            overwrite-mode
     [[ -n "${key[Backspace]}"         ]] && bindkey -M "$keymap" "${key[Backspace]}"         backward-delete-char
     [[ -n "${key[Delete]}"            ]] && bindkey -M "$keymap" "${key[Delete]}"            delete-char
-    [[ -n "${key[Up]}"                ]] && bindkey -M "$keymap" "${key[Up]}"                up-line-or-beginning-search
-    [[ -n "${key[Down]}"              ]] && bindkey -M "$keymap" "${key[Down]}"              down-line-or-beginning-search
+    [[ -n "${key[Up]}"                ]] && bindkey -M "$keymap" "${key[Up]}"                history-substring-search-up
+    [[ -n "${key[Down]}"              ]] && bindkey -M "$keymap" "${key[Down]}"              history-substring-search-down
     [[ -n "${key[Left]}"              ]] && bindkey -M "$keymap" "${key[Left]}"              backward-char
     [[ -n "${key[Right]}"             ]] && bindkey -M "$keymap" "${key[Right]}"             forward-char
     [[ -n "${key[PageUp]}"            ]] && bindkey -M "$keymap" "${key[PageUp]}"            beginning-of-buffer-or-history

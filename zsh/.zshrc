@@ -6,25 +6,23 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Start tmux
-if (( $+commands[tmux] )) && [[ -n ${DISPLAY} ]] && [[ -z ${TMUX} ]]; then
-  exec tmux new-session -A -s ${USER} >/dev/null 2>&1
+if (( $+commands[tmux] )) && [[ -n $DISPLAY ]] && [[ -z $TMUX ]]; then
+  exec tmux new-session -A -s $USER >/dev/null 2>&1
 fi
 
 # Load zstyles
-[[ -r $ZDOTDIR/.zstyles ]] && . $ZDOTDIR/.zstyles
+[[ -r ${ZDOTDIR}/.zstyles ]] && . ${ZDOTDIR}/.zstyles
 
 # Autoload functions
-autoload -Uz antidote $ZDOTDIR/functions/*
+autoload -Uz antidote ${ZDOTDIR}/functions/*
 
 # Initialize plugins
 antidote load
 
-# ZSH syntax highlighting
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
-
-# ZSH history substring search
-[[ $DISPLAY || $WAYLAND_DISPLAY ]] && {
+# ZSH syntax highlighting and history substring search
+[[ -n $WAYLAND_DISPLAY || -n $DISPLAY ]] && {
+  typeset -A ZSH_HIGHLIGHT_STYLES
+  ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
   HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=23,fg=79,bold'
   HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=1,fg=217,bold'
 }
