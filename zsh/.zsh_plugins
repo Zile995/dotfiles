@@ -5,16 +5,16 @@ romkatv/powerlevel10k
 Aloxaf/fzf-tab
 
 # Local plugins
-$ZDOTDIR/plugins/fzf.zsh
-$ZDOTDIR/plugins/colors.zsh
-$ZDOTDIR/plugins/dirnav.zsh
-$ZDOTDIR/plugins/aliases.zsh
-$ZDOTDIR/plugins/history.zsh
-$ZDOTDIR/plugins/shellopts.zsh
-$ZDOTDIR/plugins/completion.zsh
-$ZDOTDIR/plugins/copybuffer.zsh
-$ZDOTDIR/plugins/key-bindings.zsh
-$ZDOTDIR/plugins/window-title.zsh
+$ZPLUGINDIR/local/fzf.zsh
+$ZPLUGINDIR/local/colors.zsh
+$ZPLUGINDIR/local/dirnav.zsh
+$ZPLUGINDIR/local/aliases.zsh
+$ZPLUGINDIR/local/history.zsh
+$ZPLUGINDIR/local/shellopts.zsh
+$ZPLUGINDIR/local/completion.zsh
+$ZPLUGINDIR/local/copybuffer.zsh
+$ZPLUGINDIR/local/key-bindings.zsh
+$ZPLUGINDIR/local/window-title.zsh
 
 # Zsh-users plugins
 zsh-users/zsh-autosuggestions

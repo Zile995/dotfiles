@@ -1,4 +1,5 @@
 ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
+ZPLUGINDIR=${ZDOTDIR}/plugins
 
 # Exports
 (( $+commands[nano] )) && export EDITOR=nano
@@ -8,15 +9,17 @@ ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 }
 
+export ANTIDOTE_HOME=${ZPLUGINDIR}/remote
+
 () {
   # Ensure fpath array does not contain duplicates
   typeset -gU fpath
 
   local antidote_path=/usr/share/zsh-antidote
   [[ ! -r ${antidote_path}/antidote.zsh ]] && {
-    antidote_path="${ZDOTDIR}/.antidote"
-  	[[ ! -r ${antidote_path}/antidote.zsh ]] && (( $+commands[git] )) &&
-      git clone --depth=1 https://github.com/mattmc3/antidote.git "$antidote_path"
+    antidote_path=${ZDOTDIR}/.antidote
+	[[ ! -r ${antidote_path}/antidote.zsh ]] && (( $+commands[git] )) &&
+      git clone --depth=1 https://github.com/mattmc3/antidote.git $antidote_path
   }
 
   # Add functions paths

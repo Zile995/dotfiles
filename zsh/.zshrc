@@ -11,12 +11,12 @@ if (( $+commands[tmux] )) && [[ -n $DISPLAY ]] && [[ -z $TMUX ]]; then
 fi
 
 # Load zstyles
-[[ -r ${ZDOTDIR}/.zstyles ]] && . ${ZDOTDIR}/.zstyles
+[[ -r ${ZDOTDIR}/.zstyles ]] && source ${ZDOTDIR}/.zstyles
 
 # Autoload functions
 autoload -Uz antidote ${ZDOTDIR}/functions/*
 
-# Initialize plugins
+# Initialize remote plugins
 antidote load
 
 # ZSH syntax highlighting and history substring search
