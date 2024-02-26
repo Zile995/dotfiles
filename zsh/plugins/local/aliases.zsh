@@ -34,13 +34,13 @@ alias ping='ping -c 4'
 (( $+commands[eza] )) && {
   alias eza='eza --color=auto --icons'
   alias exa='eza'
-  alias l.='eza -d .*'
+  alias l.='eza -d .*(N)'
   alias ls='eza'
   alias ll='eza -l --group-directories-first --git'
   alias la='eza -la --group-directories-first --git'
 } || {
   alias ls='ls --color=tty'
-  alias l.='ls -d .*'
+  alias l.='ls -d .*(N)'
   alias ll='ls -lh'
   alias la='ls -lAh'
 }
