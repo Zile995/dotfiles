@@ -241,20 +241,29 @@ fzf-package-remove() {
 () {
   (( $+commands[fzf] )) || return 1
 
-  local fzf_dirs=(
-    "/usr/share/fzf"
-    "/usr/local/opt/fzf"
-    "/usr/local/share/zsh"
-    "/usr/share/doc/fzf/examples"
-    "/usr/local/share/examples/fzf"
-    "${HOME}/.fzf"
-    "${HOME}/.nix-profile/share/fzf"
-    "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
-  )
+  local fzf_base
 
-  for dir in ${fzf_dirs}; do
-    if [[ -d $dir ]]; then local fzf_base="$dir"; break; fi
-  done
+  case $PREFIX in
+    *com.termux*)
+      fzf_base="${PREFIX}/share/fzf"
+      ;;
+    *)
+      local -a fzf_dirs=(
+        "/usr/share/fzf"
+        "/usr/local/opt/fzf"
+        "/usr/local/share/zsh"
+        "/usr/share/doc/fzf/examples"
+        "/usr/local/share/examples/fzf"
+        "${HOME}/.fzf"
+        "${HOME}/.nix-profile/share/fzf"
+        "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
+      )
+
+      for dir in ${fzf_dirs}; do
+        if [[ -d $dir ]]; then fzf_base="$dir"; break; fi
+      done
+      ;;
+  esac
 
   set_opts
   [[ -n $fzf_base ]] && {
