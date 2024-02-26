@@ -8,7 +8,7 @@ set_key_opts() {
 
   (( $+commands[wl-copy] || $+commands[xclip] )) || return 1
 
-  export FZF_CTRL_R_OPTS=$FZF_CTRL_R_OPTS"
+  export FZF_CTRL_R_OPTS="$FZF_CTRL_R_OPTS
     --bind 'ctrl-o:execute-silent(echo -n {2..} | { wl-copy -n || xclip -r -in -sel c })+abort'
     --header 'Press CTRL-O to copy command into clipboard'
   "
@@ -57,13 +57,36 @@ set_opts() {
 }
 
 load_key_bindings() {
-  local key_bindings_file="/usr/share/fzf/key-bindings.zsh"
-  [[ -e $key_bindings_file ]] && source "$key_bindings_file"
+  local base_dir="$1"
+  local key_bindings_files=(
+    "${base_dir}/key-bindings.zsh"
+    "${base_dir}/_fzf_key_bindings"
+    "/etc/zsh_completion.d/fzf-key-bindings"
+  )
+
+  for key_bindings in ${key_bindings_files}; do
+    if [[ -r $key_bindings ]]; then
+      source "$key_bindings" 2>/dev/null
+      break
+    fi
+  done
 }
 
 load_completion() {
-  local completion_file="/usr/share/fzf/completion.zsh"
-  [[ -e $completion_file ]] && source "$completion_file"
+  local base_dir="$1"
+  local completion_files=(
+    "${base_dir}/completion.zsh"
+    "${base_dir}/_fzf_completion"
+    "${base_dir}/site-functions/_fzf"
+    "${base_dir}/vendor-completions/_fzf"
+  )
+
+  for completion_file in ${completion_files}; do
+    if [[ -r $completion_file ]]; then
+      source "$completion_file" 2>/dev/null
+      break
+    fi
+  done
 }
 
 fzf-ctrl-z() {
@@ -153,7 +176,7 @@ fzf-xdg-widget() {
     --bind "ctrl-d:change-prompt(󰉋  Directories ❯ )+reload($FZF_ALT_C_COMMAND)+change-preview($eza_preview)" \
   )
 
-  [[ -e $tmp_file ]] && local should_print=$('cat' $tmp_file)
+  [[ -r $tmp_file ]] && local should_print=$('cat' $tmp_file)
 
   if [ "$should_print" -eq 1 ]; then
     LBUFFER+="${(q)selected_item}"
@@ -218,9 +241,26 @@ fzf-package-remove() {
 () {
   (( $+commands[fzf] )) || return 1
 
+  local fzf_dirs=(
+    "/usr/share/fzf"
+    "/usr/local/opt/fzf"
+    "/usr/local/share/zsh"
+    "/usr/share/doc/fzf/examples"
+    "/usr/local/share/examples/fzf"
+    "${HOME}/.fzf"
+    "${HOME}/.nix-profile/share/fzf"
+    "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
+  )
+
+  for dir in ${fzf_dirs}; do
+    if [[ -d $dir ]]; then local fzf_base="$dir"; break; fi
+  done
+
   set_opts
-  load_completion
-  load_key_bindings
+  [[ -n $fzf_base ]] && {
+    load_completion "$fzf_base"
+    load_key_bindings "$fzf_base"
+  }
 
   zle -N fzf-ctrl-z
   zle -N fzf-xdg-widget
