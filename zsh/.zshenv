@@ -1,5 +1,6 @@
 ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
 ZPLUGINDIR=${ZDOTDIR}/plugins
+ZPROMPTDIR=${ZDOTDIR}/prompts
 
 # Exports
 (( $+commands[nano] )) && export EDITOR=nano
