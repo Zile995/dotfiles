@@ -31,7 +31,7 @@ alias lsblk='lsblk -o +fstype,label,uuid,model'
 alias ping='ping -c 4'
 
 # eza or ls with colors
-(( $+commands[eza] )) && {
+(( $+commands[eza] )) && 256_colors && {
   alias eza='eza --color=auto --icons'
   alias exa='eza'
   alias l.='eza -d .*(N)'
