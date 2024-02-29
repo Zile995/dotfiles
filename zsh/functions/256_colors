@@ -1,0 +1,6 @@
+#!/bin/zsh
+# Check if terminal supports 256 colors
+
+256_colors() {
+  zmodload zsh/terminfo && (( terminfo[colors] >= 256 ))
+}
