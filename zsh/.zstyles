@@ -4,7 +4,7 @@
 
 zstyle ':antidote:bundle' use-friendly-names 'yes'
 zstyle ':antidote:bundle' file ${ZDOTDIR:-~}/.zsh_plugins
-zstyle ':antidote:static' file ${ZDOTDIR:-~}/.zsh_plugins.zsh
+zstyle ':antidote:static' file ${ZPLUGINDIR:-~}/.zsh_plugins.zsh
 
 #
 # fzf-tab
