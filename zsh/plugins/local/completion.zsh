@@ -1,4 +1,6 @@
 () {
+  setopt localoptions extendedglob
+
   local zcompcache=${ZCACHEDIR}/.zcompcache
   local zcompdump=${ZCACHEDIR}/.zcompdump
 
@@ -13,8 +15,8 @@
   autoload -U +X bashcompinit && bashcompinit
 
   # zcompile completion files
-  zcompile_file "$zcompcache"
-  zcompile_file "$zcompdump"
+  autoload -Uz zrecompile
+  zrecompile -pq ${ZCACHEDIR}/^(*.zwc|*.zwc.old)(-.N)
 }
 
 # Completion

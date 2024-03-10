@@ -8,7 +8,7 @@
 # Autoload functions
 autoload -Uz antidote ${ZDOTDIR}/functions/*
 
-# Initialize remote plugins
+# Load plugins
 antidote load
 
 256_colors && {
@@ -20,5 +20,6 @@ antidote load
 
   # Source the p10k prompt
   [[ ! -f ${ZPROMPTDIR}/.p10k.zsh ]] || source ${ZPROMPTDIR}/.p10k.zsh
-} ||
+} || {
   [[ ! -f ${ZPROMPTDIR}/.p10k-portable.zsh ]] || source ${ZPROMPTDIR}/.p10k-portable.zsh
+}
