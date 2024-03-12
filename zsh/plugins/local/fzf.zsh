@@ -157,7 +157,7 @@ fzf-xdg-widget() {
   eza_preview="[[ -f {} ]] || eza -1 --icons {}"
   bat_preview="[[ -d {} ]] || bat --color=always {}"
   (( $+commands[wl-copy] || $+commands[xclip] )) &&
-    copy_command="printf '%q' $(printf '%q' $PWD)/{} | { wl-copy -n || xclip -r -in -sel c }"
+    copy_command='printf "%q" $PWD/{} | { wl-copy -n || xclip -r -in -sel c }'
 
   selected_item=$( \
   : | fzf \
