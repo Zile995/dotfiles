@@ -4,10 +4,12 @@ romkatv/powerlevel10k
 # Fzf completion
 Aloxaf/fzf-tab
 
+# Dirnav plugin
+Zile995/zsh-dirnav branch:down-v2
+
 # Local plugins
 $ZPLUGINDIR/local/fzf.zsh
 $ZPLUGINDIR/local/colors.zsh
-$ZPLUGINDIR/local/dirnav.zsh
 $ZPLUGINDIR/local/aliases.zsh
 $ZPLUGINDIR/local/history.zsh
 $ZPLUGINDIR/local/shellopts.zsh
