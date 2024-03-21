@@ -1,12 +1,12 @@
 set_key_opts() {
   local bat_preview
-  (( $+commands[bat] )) && bat_preview=" | bat -l bash --color always -pp --wrap=character"
+  (( $+commands[bat] )) && bat_preview=' | bat -l bash --color always -pp --wrap=character'
 
   export FZF_CTRL_R_OPTS="--preview 'echo {}$bat_preview' --preview-window down:5:hidden:wrap"
-  (( $+commands[eza] )) && export FZF_ALT_C_OPTS="--preview 'eza -1 --icons {}'"
-  (( $+commands[bat] )) && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
+  (( $+commands[eza] )) && export FZF_ALT_C_OPTS="--preview 'eza -1 --icons --color=always -- {}'"
+  (( $+commands[bat] )) && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always -- {}'"
 
-  (( $+commands[wl-copy] || $+commands[xclip] )) || return 1
+  (( $+commands[wl-copy] || $+commands[xclip] )) || return
 
   export FZF_CTRL_R_OPTS="$FZF_CTRL_R_OPTS
     --bind 'ctrl-o:execute-silent(echo -n {2..} | { wl-copy -n || xclip -r -in -sel c })+abort'
@@ -15,9 +15,9 @@ set_key_opts() {
 }
 
 set_command_opts() {
-  (( $+commands[fd] )) || return 1
+  (( $+commands[fd] )) || return
 
-  local command="fd --hidden --exclude={.git,.hg,.svn}"
+  local command='fd --hidden --exclude={.git,.hg,.svn}'
 
   # Set default commands. Use fd instead of the default find.
   export FZF_ALT_C_COMMAND="$command --type d"
@@ -25,10 +25,16 @@ set_command_opts() {
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
   # Use fd for listing path candidates.
-  _fzf_compgen_dir() { eval $FZF_ALT_C_COMMAND . "$1" }
+  _fzf_compgen_dir() {
+    local command="$FZF_ALT_C_COMMAND"
+    eval "$command" . "$1"
+   }
 
   # Use fd to generate the list for directory completion.
-  _fzf_compgen_path() { eval $FZF_DEFAULT_COMMAND . "$1" }
+  _fzf_compgen_path() {
+    local command="$FZF_DEFAULT_COMMAND"
+    eval "$command" . "$1"
+  }
 }
 
 set_opts() {
@@ -89,11 +95,45 @@ load_completion() {
   done
 }
 
+load_fzf() {
+  set_opts
+
+  local fzf_version="${$(fzf --version)%.*}"
+  (( ${fzf_version//./} >= 048 )) && eval "$(fzf --zsh)" && return
+
+  case $PREFIX in
+    *com.termux*)
+      fzf_base="${PREFIX}/share/fzf"
+      ;;
+    *)
+      local -a fzf_dirs=(
+        "/usr/share/fzf"
+        "/usr/local/opt/fzf"
+        "/usr/local/share/zsh"
+        "/usr/share/doc/fzf/examples"
+        "/usr/local/share/examples/fzf"
+        "${HOME}/.fzf"
+        "${HOME}/.nix-profile/share/fzf"
+        "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
+      )
+
+      for dir in ${fzf_dirs}; do
+        [[ -d $dir ]] && fzf_base="$dir"; break
+      done
+      ;;
+  esac
+
+  [[ -z $fzf_base ]] || {
+    load_completion "$fzf_base"
+    load_key_bindings "$fzf_base"
+  }
+}
+
 fzf-ctrl-z() {
   setopt localoptions pipefail no_aliases 2> /dev/null
 
   local current_jobs=("${(@f)$(jobs -l)}")
-  [[ ! -n $current_jobs ]] && return 1
+  [[ -n $current_jobs ]] || return
 
   if [[ ${#current_jobs} -gt 1 ]]; then
     local selected_job=$( \
@@ -106,7 +146,7 @@ fzf-ctrl-z() {
       awk '{ print $1 }' |
       tr -d '[]' \
     )
-    [[ -n $selected_job ]] && { BUFFER="fg %$selected_job"; zle accept-line -w }
+    [[ -z $selected_job ]] || { BUFFER="fg %$selected_job"; zle accept-line -w }
   else
     BUFFER="fg" && zle accept-line -w
   fi
@@ -117,7 +157,7 @@ fzf-ctrl-z() {
 fzf-text-search() {
   setopt localoptions pipefail no_aliases 2> /dev/null
 
-  (( $+commands[bat] && $+commands[rg] )) || return 1
+  (( $+commands[bat] && $+commands[rg] )) || return
 
   local INITIAL_QUERY="${*:-}"
   local search_text="Search text"
@@ -144,7 +184,7 @@ fzf-text-search() {
 }
 
 fzf-package-install() {
-  (( $+commands[yay] && $+commands[pacman] )) || return 1
+  (( $+commands[yay] && $+commands[pacman] )) || return
 
   setopt localoptions pipefail no_aliases 2> /dev/null
 
@@ -172,58 +212,27 @@ fzf-package-install() {
 }
 
 fzf-package-remove() {
-  (( $+commands[pacman] )) || return 1
+  (( $+commands[pacman] )) || return
 
   setopt localoptions pipefail no_aliases 2> /dev/null
-
-  local preview="pacman -Qi {1}"
-  local pacman_search="pacman -Qq"
 
   : | fzf \
     --multi \
     --reverse \
     --height "70%" \
     --query "$LBUFFER" \
-    --preview "$preview" \
+    --preview "pacman -Qi {1}" \
     --header "[󱧖 Remove the packages]" \
     --prompt "󰣇 Search the packages ❯ " \
-    --bind "start:reload($pacman_search)" | xargs -ro sudo pacman -Rns
+    --bind "start:reload(pacman -Qq)" | xargs -ro sudo pacman -Rns
 
   redraw_prompt
 }
 
 () {
-  (( $+commands[fzf] )) || return 1
+  (( $+commands[fzf] )) || return
 
-  local fzf_base
-
-  case $PREFIX in
-    *com.termux*)
-      fzf_base="${PREFIX}/share/fzf"
-      ;;
-    *)
-      local -a fzf_dirs=(
-        "/usr/share/fzf"
-        "/usr/local/opt/fzf"
-        "/usr/local/share/zsh"
-        "/usr/share/doc/fzf/examples"
-        "/usr/local/share/examples/fzf"
-        "${HOME}/.fzf"
-        "${HOME}/.nix-profile/share/fzf"
-        "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
-      )
-
-      for dir in ${fzf_dirs}; do
-        if [[ -d $dir ]]; then fzf_base="$dir"; break; fi
-      done
-      ;;
-  esac
-
-  set_opts
-  [[ -n $fzf_base ]] && {
-    load_completion "$fzf_base"
-    load_key_bindings "$fzf_base"
-  }
+  load_fzf
 
   zle -N fzf-ctrl-z
   zle -N fzf-text-search
