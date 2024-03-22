@@ -27,13 +27,22 @@ zstyle ':completion:*'                  special-dirs      'false'
 zstyle ':completion:*'                  single-ignored    'show'
 zstyle ':completion:*'                  squeeze-slashes   'true'
 zstyle ':completion:::::'               insert-tab        'pending'
-zstyle ':completion:*'                  list-colors       "${(@s.:.)LS_COLORS}"
+zstyle ':completion:*'                  list-colors       ${(@s.:.)LS_COLORS}
 zstyle ':completion:*'                  matcher-list      'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:options'          description       'yes'
 zstyle ':completion:*:options'          auto-description  '%d'
 zstyle ':completion:complete:*:options' sort              'false'
 zstyle ':completion:*:functions'        ignored-patterns  '-*|_*'
 zstyle ':completion:*:-subscript-:*'    tag-order         'indexes parameters'
+
+# Fuzzy match mistyped completions
+zstyle ':completion:*'               completer  _complete _match _approximate
+zstyle ':completion:*:match:*'       original   only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+
+# Increase the number of errors based on the length of the typed word. But make
+# sure to cap (at 7) the max-errors to avoid hanging
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3>7?7:($#PREFIX+$#SUFFIX)/3))numeric)'
 
 # Directory
 zstyle ':completion:*:paths'     accept-exact-dirs  'true'
@@ -50,7 +59,7 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
   operator pcap postfix postgres privoxy pulse pvm quagga radvd \
   rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
 
-# Ignore multiple entries.
+# Ignore multiple entries
 zstyle ':completion:*:rm:*'             file-patterns '*:all-files'
 zstyle ':completion:*:(rm|kill|diff):*' ignore-line   other
 
