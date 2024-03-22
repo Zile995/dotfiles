@@ -24,17 +24,11 @@ set_command_opts() {
   export FZF_DEFAULT_COMMAND="$command --type f"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-  # Use fd for listing path candidates.
-  _fzf_compgen_dir() {
-    local command="$FZF_ALT_C_COMMAND"
-    eval "$command" . "$1"
-   }
-
   # Use fd to generate the list for directory completion.
-  _fzf_compgen_path() {
-    local command="$FZF_DEFAULT_COMMAND"
-    eval "$command" . "$1"
-  }
+  _fzf_compgen_path() { eval "$FZF_CTRL_T_COMMAND" . "$1" }
+
+  # Use fd for listing path candidates.
+  _fzf_compgen_dir() { eval "$FZF_ALT_C_COMMAND" . "$1" }
 }
 
 set_opts() {
@@ -98,8 +92,9 @@ load_completion() {
 load_fzf() {
   set_opts
 
-  local fzf_version="${$(fzf --version)%.*}"
-  (( ${fzf_version//./} >= 048 )) && eval "$(fzf --zsh)" && return
+  local fzf_version="${$(fzf --version 2>/dev/null)%.*}"
+  [[ -n $fzf_version ]] && (( ${fzf_version//./} >= 048 )) &&
+    eval "$(fzf --zsh)" && return
 
   case $PREFIX in
     *com.termux*)
@@ -112,9 +107,11 @@ load_fzf() {
         "/usr/local/share/zsh"
         "/usr/share/doc/fzf/examples"
         "/usr/local/share/examples/fzf"
+        "/opt/homebrew/opt/fzf"
         "${HOME}/.fzf"
         "${HOME}/.nix-profile/share/fzf"
         "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
+        "${MSYSTEM_PREFIX}/share/fzf"
       )
 
       for dir in ${fzf_dirs}; do
