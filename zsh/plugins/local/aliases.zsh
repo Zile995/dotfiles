@@ -32,10 +32,10 @@ alias ping='ping -c 4'
 
 # eza or ls with colors
 (( $+commands[eza] )) && 256_colors && {
-  alias eza='eza --color=auto --icons'
+  alias eza='eza --color=auto --icons=always'
   alias exa='eza'
-  alias l.='eza -d .*(N)'
   alias ls='eza'
+  alias l.='eza -d .*(N)'
   alias ll='eza -l --group-directories-first --git'
   alias la='eza -la --group-directories-first --git'
 } || {
@@ -58,13 +58,17 @@ alias ping='ping -c 4'
 (( $+commands[pactree] )) && alias pactree='pactree -c'
 
 # git diff alias
-(( $+commands[git] )) && alias gd='git diff'
+(( $+commands[git] )) && {
+  alias gd='git diff'
+  alias gst='git status'
+  (( $+commands[delta] )) && alias gdd='git diff | delta'
+}
 
 # Use delta with git diff
 (( $+commands[git] && $+commands[delta] )) && alias gdd='git diff | delta'
 
 # Reset all pacman keys
-(( $+commands[pacman] )) && \
+(( $+commands[pacman] )) &&
   alias resetkeys='sudo zsh -c "rm -rf /etc/pacman.d/gnupg; pacman-key --init; pacman-key --populate"'
 
 # grep with colors
