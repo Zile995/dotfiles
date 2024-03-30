@@ -3,13 +3,14 @@
 #
 
 zstyle ':antidote:bundle' use-friendly-names 'yes'
-zstyle ':antidote:bundle' file ${ZDOTDIR:-~}/.zsh_plugins
-zstyle ':antidote:static' file ${ZPLUGINDIR:-~}/.zsh_plugins.zsh
+zstyle ':antidote:bundle' file ${ZDOTDIR:-$HOME}/.zsh_plugins
+zstyle ':antidote:static' file ${ZPLUGINDIR:-$HOME}/.zsh_plugins.zsh
 
 # Antidote zcompile
 zstyle ':antidote:static' zcompile 'yes'
 zstyle ':antidote:bundle:*' zcompile 'yes'
 zstyle ':antidote:bundle:romkatv/powerlevel10k' zcompile 'no'
+zstyle ':antidote:bundle:zsh-users/zsh-syntax-highlighting' zcompile 'no'
 
 #
 # fzf-tab
