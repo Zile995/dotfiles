@@ -49,6 +49,8 @@ alias ping='ping -c 4'
 (( $+commands[systemctl] )) && {
   alias sreboot='systemctl soft-reboot'
   alias freboot='systemctl reboot --firmware-setup'
+  (( $+commands[pipewire-pulse] )) && (( $+commands[wireplumber] )) &&
+    alias pwreset='systemctl --user restart wireplumber pipewire pipewire-pulse'
 }
 
 # Update Pacman, AUR and Flatpak packages
