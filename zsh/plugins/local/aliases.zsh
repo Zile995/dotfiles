@@ -73,6 +73,10 @@ alias ping='ping -c 4'
 (( $+commands[pacman] )) &&
   alias resetkeys='sudo zsh -c "rm -rf /etc/pacman.d/gnupg; pacman-key --init; pacman-key --populate"'
 
+# Update all Arch mirrors
+(( $+commands[pacman] && $+commands[reflector] )) &&
+  alias updatemirrors='sudo reflector --verbose --protocol https --score 10 --sort rate --fastest 5 --save /etc/pacman.d/mirrorlist'
+
 # grep with colors
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}'
 
