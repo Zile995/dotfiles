@@ -54,7 +54,13 @@ alias ping='ping -c 4'
 }
 
 # Update Pacman, AUR and Flatpak packages
-(( $+commands[yay] && $+commands[flatpak] )) && alias update='yay && flatpak update'
+(( $+commands[pacman] )) && {
+  alias update='sudo pacman -Syu'
+  (( $+commands[pacman] && $+commands[yay] )) &&
+    alias update='sudo pacman -Syu && yay -Syua'
+  (( $+commands[pacman] && $+commands[yay] && $+commands[flatpak] )) &&
+    alias update='sudo pacman -Syu && yay -Syua && flatpak update'
+}
 
 # Colorize pactree by default
 (( $+commands[pactree] )) && alias pactree='pactree -c'
