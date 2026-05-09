@@ -16,6 +16,9 @@ zstyle ':antidote:bundle:zsh-users/zsh-syntax-highlighting' zcompile 'no'
 # fzf-tab
 #
 
+# Follow FZF_DEFAULT_OPTS
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
 # fzf-tab configuration
 zstyle ':fzf-tab:*' print-query alt-p
 zstyle ':fzf-tab:*' accept-line alt-enter
