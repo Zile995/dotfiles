@@ -16,7 +16,7 @@ antidote load
   typeset -A ZSH_HIGHLIGHT_STYLES
   ZSH_HIGHLIGHT_STYLES[comment]='fg=8,bold'
   HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=23,fg=79,bold'
-  HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=1,fg=217,bold' 
+  HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=1,fg=217,bold'
 
   # Source the p10k prompt
   [[ ! -f ${ZPROMPTDIR}/.p10k.zsh ]] || source ${ZPROMPTDIR}/.p10k.zsh

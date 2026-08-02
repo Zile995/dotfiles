@@ -1,4 +1,4 @@
-set_key_opts() {
+\set_key_opts() {
   local bat_preview
   (( $+commands[bat] )) && bat_preview=' | bat -l bash --color always -pp --wrap=character'
 
@@ -47,12 +47,11 @@ set_opts() {
     --bind ctrl-h:backward-kill-word,ctrl-k:kill-line,ctrl-u:clear-query
     --bind alt-j:clear-query,alt-k:unix-line-discard
     --prompt '❯ ' --pointer '▶' --marker '✓'
-    --color fg:-1,bg:-1,hl:#d49c2d
-    --color fg+:#ffffff,bg+:#2b2b2b,hl+:#ffcc66
-    --color info:#789cc2,pointer:#6095d1,prompt:#6ba3a3
-    --color marker:#a0dbca,spinner:#6fb375,header:#9c8db8:italic
+    --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#262626
+    --color=hl:#f1a37b,hl+:#f1a37b,info:#789cc2,marker:#a0dbca
+    --color=prompt:#6ba3a3,spinner:#6fb375,pointer:#6095d1,header:#9ab2e5
+    --color=border:#262626,label:#aeaeae,query:#d9d9d9
   "
-
   unfunction set_key_opts set_command_opts
 }
 
@@ -126,31 +125,6 @@ load_fzf() {
   }
 }
 
-fzf-ctrl-z() {
-  setopt localoptions pipefail no_aliases 2> /dev/null
-
-  local current_jobs=("${(@f)$(jobs -l)}")
-  [[ -n $current_jobs ]] || return
-
-  if [[ ${#current_jobs} -gt 1 ]]; then
-    local selected_job=$( \
-      printf "%s\n" "${current_jobs[@]}" |
-      fzf \
-      --reverse \
-      --bind "ctrl-z:accept" \
-      --header "CTRL-Z/ENTER: Run job in the foreground" \
-      --prompt="  Search jobs ❯ " |
-      awk '{ print $1 }' |
-      tr -d '[]' \
-    )
-    [[ -z $selected_job ]] || { BUFFER="fg %$selected_job"; zle accept-line -w }
-  else
-    BUFFER="fg" && zle accept-line -w
-  fi
-
-  redraw_prompt
-}
-
 fzf-text-search() {
   setopt localoptions pipefail no_aliases 2> /dev/null
 
@@ -163,6 +137,9 @@ fzf-text-search() {
 
   rm -f /tmp/rg-fzf-{r,f}
   : | fzf \
+      --tac \
+      --no-sort \
+      --exact \
       --delimiter : \
       --height "60%" \
       --prompt "$search_text ❯ " \
@@ -180,68 +157,16 @@ fzf-text-search() {
   redraw_prompt
 }
 
-fzf-package-install() {
-  (( $+commands[yay] && $+commands[pacman] )) || return
-
-  setopt localoptions pipefail no_aliases 2> /dev/null
-
-  local preview="yay -Si {1}"
-  local yay_search="yay -Salq"
-  local pacman_search="pacman -Slq"
-
-  local logo="󰣇"
-  local prompt_text="Search the packages ❯ "
-  local header_text="[󱧕 Install the packages]\n[F1]: Official / [F2]: AUR"
-
-  : | fzf \
-    --multi \
-    --reverse \
-    --height "70%" \
-    --preview "$preview" \
-    --query "$LBUFFER" \
-    --prompt "$logo [Official] $prompt_text" \
-    --header "$(echo -e $header_text)" \
-    --bind "start:reload($pacman_search)" \
-    --bind "f2:change-prompt($logo [AUR] $prompt_text)+reload($yay_search)" \
-    --bind "f1:change-prompt($logo [Official] $prompt_text)+reload($pacman_search)" | xargs -ro yay -S
-
-  redraw_prompt
-}
-
-fzf-package-remove() {
-  (( $+commands[pacman] )) || return
-
-  setopt localoptions pipefail no_aliases 2> /dev/null
-
-  : | fzf \
-    --multi \
-    --reverse \
-    --height "70%" \
-    --query "$LBUFFER" \
-    --preview "pacman -Qi {1}" \
-    --header "[󱧖 Remove the packages]" \
-    --prompt "󰣇 Search the packages ❯ " \
-    --bind "start:reload(pacman -Qq)" | xargs -ro sudo pacman -Rns
-
-  redraw_prompt
-}
-
 () {
   (( $+commands[fzf] )) || return
 
   load_fzf
 
-  zle -N fzf-ctrl-z
   zle -N fzf-text-search
-  zle -N fzf-package-remove
-  zle -N fzf-package-install
 
   builtin local keymap
   for keymap in 'emacs' 'viins' 'vicmd'; do
-    bindkey -M "$keymap" '^Z'      fzf-ctrl-z
     bindkey -M "$keymap" '^[f'     fzf-text-search
-    bindkey -M "$keymap" '^[r'     fzf-package-remove
-    bindkey -M "$keymap" '^[i'     fzf-package-install
   done
 
   unfunction set_opts load_completion load_key_bindings

@@ -1,0 +1,16 @@
+#!/bin/zsh
+# Update the pacman, AUR and flatpak packages
+
+update() {
+  sudo pacman -Sy
+  local installedver="$(LANG= sudo pacman -Qi archlinux-keyring | grep -Po '(?<=Version         : ).*')"
+  local currentver="$(LANG= sudo pacman -Si archlinux-keyring | grep -Po '(?<=Version         : ).*')"
+  if [ $installedver != $currentver ]; then
+    echo ":: Arch Linux PGP Keyring is out of date."
+    echo ":: Updating before full system upgrade."
+    sudo pacman -S --needed --noconfirm archlinux-keyring
+  fi
+  sudo pacman -Syu
+  (( $+commands[yay] )) && yay -Syua
+  (( $+commands[flatpak] )) && flatpak update
+}

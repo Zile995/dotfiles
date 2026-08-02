@@ -7,6 +7,9 @@ Aloxaf/fzf-tab
 # Dirnav plugin
 Zile995/zsh-dirnav branch:down-v2
 
+# Ctrl-Z plugin
+Zile995/zsh-ctrl-z
+
 # Local plugins
 $ZPLUGINDIR/local/fzf.zsh
 $ZPLUGINDIR/local/colors.zsh

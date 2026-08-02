@@ -53,15 +53,6 @@ alias ping='ping -c 4'
     alias pwreset='systemctl --user restart wireplumber pipewire pipewire-pulse'
 }
 
-# Update Pacman, AUR and Flatpak packages
-(( $+commands[pacman] )) && {
-  alias update='sudo pacman -Syu'
-  (( $+commands[pacman] && $+commands[yay] )) &&
-    alias update='sudo pacman -Syu && yay -Syua'
-  (( $+commands[pacman] && $+commands[yay] && $+commands[flatpak] )) &&
-    alias update='sudo pacman -Syu && yay -Syua && flatpak update'
-}
-
 # Colorize pactree by default
 (( $+commands[pactree] )) && alias pactree='pactree -c'
 
