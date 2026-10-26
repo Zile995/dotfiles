@@ -2,15 +2,30 @@
 # Update the pacman, AUR and flatpak packages
 
 update() {
+  emulate -L bash
+  setopt no_ksh_arrays 2>/dev/null
+
+  (( $+commands[pacman] )) || exit 1
+
+  source /usr/share/makepkg/util/message.sh
+  colorize
+  
+  msg "Updating pacman packages..."
   sudo pacman -Sy
   local installedver="$(LANG= sudo pacman -Qi archlinux-keyring | grep -Po '(?<=Version         : ).*')"
   local currentver="$(LANG= sudo pacman -Si archlinux-keyring | grep -Po '(?<=Version         : ).*')"
   if [ $installedver != $currentver ]; then
-    echo ":: Arch Linux PGP Keyring is out of date."
-    echo ":: Updating before full system upgrade."
+    msg2 "Arch Linux PGP Keyring is out of date."
+    msg2 "Updating before full system upgrade."
     sudo pacman -S --needed --noconfirm archlinux-keyring
   fi
-  sudo pacman -Syu
-  (( $+commands[yay] )) && yay -Syua
-  (( $+commands[flatpak] )) && flatpak update
+  sudo pacman -Su
+  (( ! $+commands[yay] )) || {
+    msg "Updating AUR packages..."
+    yay -Syua
+  }
+  (( ! $+commands[flatpak] )) || {
+    msg "Updating flatpak packages..."
+    flatpak update
+  }
 }
